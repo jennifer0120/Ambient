@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_simple">
+    app:startDestination="@+id/navigation_mixes">
 
     <fragment
-        android:id="@+id/navigation_simple"
+        android:id="@+id/navigation_mixes"
         android:name="com.example.ambientproject.MixedFragment"
-        android:label="Simple"
+        android:label="Mixes"
         tools:layout="@layout/recycler_main" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_select"-->
-<!--        android:name="edu.utap.recyclerviewfrag.SelectFragment"-->
-<!--        android:label="Select"-->
-<!--        tools:layout="@layout/recycler_main" />-->
+    <fragment
+        android:id="@+id/navigation_sounds"
+        android:name="com.example.ambientproject.SoundsFragment"
+        android:label="Sounds"
+        tools:layout="@layout/recycler_main" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_favorites"-->
