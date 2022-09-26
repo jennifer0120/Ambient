@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_simple">
+
+    <fragment
+        android:id="@+id/navigation_simple"
+        android:name="edu.utap.recyclerviewfrag.SimpleFragment"
+        android:label="Simple"
+        tools:layout="@layout/recycler_main" />
+
+    <fragment
+        android:id="@+id/navigation_select"
+        android:name="edu.utap.recyclerviewfrag.SelectFragment"
+        android:label="Select"
+        tools:layout="@layout/recycler_main" />
+
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="edu.utap.recyclerviewfrag.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/recycler_main" />
+</navigation>
