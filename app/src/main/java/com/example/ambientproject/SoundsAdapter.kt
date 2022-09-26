@@ -1,5 +1,6 @@
 package com.example.ambientproject
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -49,7 +50,8 @@ class SoundsAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = viewModel.getItemAt(position)
         val binding = holder.rowBinding
-        binding.rowText.text = item.name
-        binding.rowPic.setImageResource(item.icon)
+        binding.itemText.text = item.name
+        binding.itemPic.setImageResource(item.icon)
+        binding.itemPic.setColorFilter(Color.WHITE)
     }
 }
