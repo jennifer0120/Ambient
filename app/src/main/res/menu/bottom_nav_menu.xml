@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/navigation_mixes"
-        android:title="Mixes" />
+        android:icon="@drawable/ic_baseline_tune_24"
+        android:title="@string/mixes" />
 
     <item
         android:id="@+id/navigation_sounds"
-        android:title="Sounds" />
+        android:icon="@drawable/ic_baseline_music_note_24"
+        android:title="@string/sounds" />
 
     <item
         android:id="@+id/navigation_settings"
-        android:title="Settings" />
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings" />
 
 </menu>
