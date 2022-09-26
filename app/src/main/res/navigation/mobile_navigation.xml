@@ -17,9 +17,9 @@
         android:label="Sounds"
         tools:layout="@layout/recycler_main" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_favorites"-->
-<!--        android:name="edu.utap.recyclerviewfrag.FavoritesFragment"-->
-<!--        android:label="Favorites"-->
-<!--        tools:layout="@layout/recycler_main" />-->
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.ambientproject.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/recycler_main" />
 </navigation>
