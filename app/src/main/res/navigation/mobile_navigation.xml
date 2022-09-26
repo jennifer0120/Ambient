@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_simple"
-        android:name="edu.utap.recyclerviewfrag.SimpleFragment"
+        android:name="com.example.ambientproject.MixedFragment"
         android:label="Simple"
         tools:layout="@layout/recycler_main" />
 
-    <fragment
-        android:id="@+id/navigation_select"
-        android:name="edu.utap.recyclerviewfrag.SelectFragment"
-        android:label="Select"
-        tools:layout="@layout/recycler_main" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_select"-->
+<!--        android:name="edu.utap.recyclerviewfrag.SelectFragment"-->
+<!--        android:label="Select"-->
+<!--        tools:layout="@layout/recycler_main" />-->
 
-    <fragment
-        android:id="@+id/navigation_favorites"
-        android:name="edu.utap.recyclerviewfrag.FavoritesFragment"
-        android:label="Favorites"
-        tools:layout="@layout/recycler_main" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_favorites"-->
+<!--        android:name="edu.utap.recyclerviewfrag.FavoritesFragment"-->
+<!--        android:label="Favorites"-->
+<!--        tools:layout="@layout/recycler_main" />-->
 </navigation>
