@@ -1,20 +1,16 @@
 package com.example.ambientproject
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ambientproject.databinding.RecyclerMainBinding
 
-class MixedFragment : Fragment() {
+class RoomsFragment : Fragment() {
     companion object {
-        val TAG: String = MixedFragment::class.java.simpleName
+        val TAG: String = RoomsFragment::class.java.simpleName
     }
 
     // https://developer.android.com/topic/libraries/view-binding#fragments

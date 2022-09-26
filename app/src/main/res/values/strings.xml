@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AmbientProject</string>
-    <string name="mixes">Mixes</string>
+    <string name="rooms">Rooms</string>
     <string name="sounds">Sounds</string>
     <string name="settings">Settings</string>
 </resources>

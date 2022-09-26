@@ -50,5 +50,6 @@ class SoundsAdapter(private val viewModel: MainViewModel)
         val item = viewModel.getItemAt(position)
         val binding = holder.rowBinding
         binding.rowText.text = item.name
+        binding.rowPic.setImageResource(item.icon)
     }
 }

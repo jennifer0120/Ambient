@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ambientproject.databinding.RecyclerMainBinding
 
@@ -31,7 +32,7 @@ class SoundsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(binding.recyclerView.context)
+        binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 3)
         binding.recyclerView.adapter = SoundsAdapter(viewModel)
     }
 
