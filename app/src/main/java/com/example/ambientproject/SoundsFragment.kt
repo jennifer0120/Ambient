@@ -1,5 +1,6 @@
 package com.example.ambientproject
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +32,7 @@ class SoundsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.recyclerView.setBackgroundResource(R.drawable.back_drawable)
         binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 3)
         binding.recyclerView.adapter = SoundsAdapter(viewModel)
     }

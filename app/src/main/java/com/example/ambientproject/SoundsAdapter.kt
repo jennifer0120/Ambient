@@ -35,6 +35,8 @@ class SoundsAdapter(private val viewModel: MainViewModel)
                     val context = it.context
                     val item = viewModel.getItemAt(position)
                     item.let {
+                        rowBinding.cardView.setCardBackgroundColor(Color.BLUE)
+                        rowBinding.itemText.setTextColor(Color.WHITE)
                         Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
                     }
                 }

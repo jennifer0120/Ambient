@@ -37,5 +37,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         supportActionBar?.title = "Ambient"
 
+        
     }
 }

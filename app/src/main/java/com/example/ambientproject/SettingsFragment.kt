@@ -23,6 +23,7 @@ class SettingsFragment: Fragment() {
     ): View {
         _binding = RecyclerMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        binding.recyclerView.setBackgroundResource(R.drawable.back_drawable)
         return root
     }
 
