@@ -35,10 +35,15 @@ class SoundsAdapter(private val viewModel: MainViewModel)
                     val position = getPos(this)
                     val context = it.context
                     val item = viewModel.getItemAt(position)
+                    viewModel.toggleTunedOn(item)
+                    val turnedOn = viewModel.isTurnedOn(item)
                     item.let {
-                        rowBinding.itemPic.setBackgroundResource(R.drawable.item_back_drawable)
-                        rowBinding.itemText.setTextColor(Color.WHITE)
-                        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+                        if (turnedOn) {
+                            rowBinding.itemPic.setBackgroundResource(R.drawable.item_back_drawable)
+                        } else {
+                            rowBinding.itemPic.setBackgroundResource(R.color.blue_gray)
+                        }
+
                     }
                 }
             }
