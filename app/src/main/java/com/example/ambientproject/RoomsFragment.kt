@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ambientproject.databinding.RecyclerMainBinding
 
 class RoomsFragment : Fragment() {
@@ -19,7 +21,7 @@ class RoomsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-//    private val viewModel: MainViewModel by activityViewModels()
+    private val roomViewModel: RoomViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,8 +36,8 @@ class RoomsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Mixed"
+        binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 2)
+        binding.recyclerView.adapter = RoomsAdapter(roomViewModel)
     }
 
     override fun onDestroyView() {

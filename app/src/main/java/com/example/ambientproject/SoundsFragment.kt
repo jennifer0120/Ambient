@@ -26,13 +26,13 @@ class SoundsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = RecyclerMainBinding.inflate(inflater, container, false)
+        binding.recyclerView.setBackgroundResource(R.drawable.back_drawable)
         val root: View = binding.root
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.setBackgroundResource(R.drawable.back_drawable)
         binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 3)
         binding.recyclerView.adapter = SoundsAdapter(viewModel)
     }
