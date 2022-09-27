@@ -1,6 +1,7 @@
 package com.example.ambientproject
 
 import android.graphics.Color
+import android.graphics.ColorFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ class SoundsAdapter(private val viewModel: MainViewModel)
                     val context = it.context
                     val item = viewModel.getItemAt(position)
                     item.let {
-                        rowBinding.cardView.setCardBackgroundColor(Color.BLUE)
+                        rowBinding.itemPic.setBackgroundResource(R.drawable.item_back_drawable)
                         rowBinding.itemText.setTextColor(Color.WHITE)
                         Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
                     }
@@ -55,6 +56,6 @@ class SoundsAdapter(private val viewModel: MainViewModel)
         val binding = holder.rowBinding
         binding.itemText.text = item.name
         binding.itemPic.setImageResource(item.icon)
-        binding.itemPic.setColorFilter(Color.WHITE)
+        binding.itemPic.setColorFilter(Color.parseColor("#ffefefef"))
     }
 }
