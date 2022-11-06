@@ -34,7 +34,7 @@ class RoomsAdapter(private val roomViewModel: RoomViewModel)
                 val context = it.context
                 val item = roomViewModel.getItemAt(position)
                 item.let {
-
+                    // TODO: when clicked, it will open up another fragment
                 }
             }
         }

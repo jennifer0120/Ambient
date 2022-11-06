@@ -20,7 +20,7 @@
             app:cardCornerRadius="5dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="@color/blue_gray"
+            app:cardBackgroundColor="#FFFAE7"
             android:id="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

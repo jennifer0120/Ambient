@@ -2,10 +2,12 @@ package com.example.ambientproject
 
 import android.graphics.Color
 import android.graphics.ColorFilter
+import android.media.MediaPlayer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ambientproject.databinding.RowBinding
 
@@ -38,11 +40,7 @@ class SoundsAdapter(private val viewModel: MainViewModel)
                     viewModel.toggleTunedOn(item)
                     val turnedOn = viewModel.isTurnedOn(item)
                     item.let {
-                        if (turnedOn) {
-                            rowBinding.itemPic.setBackgroundResource(R.drawable.item_back_drawable)
-                        } else {
-                            rowBinding.itemPic.setBackgroundResource(R.color.blue_gray)
-                        }
+                        setItemDisplay(turnedOn, rowBinding)
 
                     }
                 }
@@ -61,6 +59,21 @@ class SoundsAdapter(private val viewModel: MainViewModel)
         val binding = holder.rowBinding
         binding.itemText.text = item.name
         binding.itemPic.setImageResource(item.icon)
-        binding.itemPic.setColorFilter(Color.parseColor("#ffefefef"))
+        binding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
+    }
+
+    fun setItemDisplay(turnedOn: Boolean, rowBinding: RowBinding) {
+        if (turnedOn) {
+            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#87A2FB"))
+            rowBinding.itemPic.setColorFilter(Color.parseColor("#EEEEEE"))
+            rowBinding.itemText.setTextColor(Color.parseColor("#EEEEEE"))
+        } else {
+            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#F9F6F2"))
+            rowBinding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
+            rowBinding.itemText.setTextColor(Color.parseColor("#000000"))
+        }
+    }
+    fun playSongClip() {
+
     }
 }
