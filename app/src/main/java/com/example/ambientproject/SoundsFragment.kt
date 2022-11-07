@@ -1,5 +1,6 @@
 package com.example.ambientproject
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.os.Bundle
@@ -48,7 +49,8 @@ class SoundsFragment: Fragment() {
 
             binding.createSession.setOnClickListener {
                 if (itemList.isNotEmpty()) {
-
+                    val intent = Intent(context, CreateFocusSessionActivity::class.java)
+                    context!!.startActivity(intent)
                 }
             }
         }

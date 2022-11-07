@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel(){
     private var repository = Repository()
 
-    private var list = repository.fetchData()
+    private var list = repository.fetchData("rain_series")
 
     // Maintain a separate list of all the ambient items turned on
     private var turnedOnAmbientItemList = MutableLiveData<MutableList<Data>>()
@@ -23,7 +23,6 @@ class MainViewModel : ViewModel(){
     }
 
     fun isTurnedOn(ambientRec: Data): Boolean {
-        Log.i("XXX", "turnedOnAmbientItemList: ${turnedOnAmbientItemList.value}")
         if (turnedOnAmbientItemList.value != null) {
             return turnedOnAmbientItemList.value!!.contains(ambientRec)
         }
