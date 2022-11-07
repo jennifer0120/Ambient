@@ -80,7 +80,10 @@ class SoundsAdapter(private val viewModel: MainViewModel)
 
     fun playSongClip(turnedOn: Boolean, item: Data, context: Context) {
         if (turnedOn) {
-            playerMap[item.id] = MediaPlayer.create(context, item.rawSongId)
+//            playerMap[item.id] = MediaPlayer.create(context, item.rawSongId)
+            playerMap[item.id] = MediaPlayer()
+            playerMap[item.id]!!.setDataSource("https://firebasestorage.googleapis.com/v0/b/ambient-20983.appspot.com/o/audioTesting.m4a?alt=media&token=fa93ecbc-523a-480e-b568-e1b24231756b")
+            playerMap[item.id]!!.prepare()
             playerMap[item.id]!!.start()
         } else {
             if (playerMap[item.id] != null) {
