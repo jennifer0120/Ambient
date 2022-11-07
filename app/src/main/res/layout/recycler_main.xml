@@ -4,11 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rain Series"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:background="#FFFFFF"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         </androidx.recyclerview.widget.RecyclerView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="River Series"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
