@@ -1,6 +1,7 @@
 package com.example.ambientproject
 
 import android.graphics.Color
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,24 @@ class SoundsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 2)
         binding.recyclerView.adapter = SoundsAdapter(viewModel)
+
+        val turnedOnAmbientItemList = viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
+            itemList ->
+            if (itemList.isEmpty()) {
+                binding.createSession.setBackgroundColor(Color.parseColor("#EFEFEF"))
+                binding.createSession.setTextColor(Color.parseColor("#000000"))
+            } else {
+                binding.createSession.setBackgroundResource(R.color.purple_500)
+                binding.createSession.setTextColor(Color.parseColor("#FFFFFF"))
+            }
+
+            binding.createSession.setOnClickListener {
+                if (itemList.isNotEmpty()) {
+
+                }
+            }
+        }
+
     }
 
     override fun onDestroyView() {

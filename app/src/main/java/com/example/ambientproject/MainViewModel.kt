@@ -1,5 +1,8 @@
 package com.example.ambientproject
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 // TODO: Need to update this class name later on
@@ -9,7 +12,7 @@ class MainViewModel : ViewModel(){
     private var list = repository.fetchData()
 
     // Maintain a separate list of all the ambient items turned on
-    private var turnedOnAmbientItemList = mutableListOf<Data>()
+    private var turnedOnAmbientItemList = MutableLiveData<MutableList<Data>>()
 
     fun getItemAt(position: Int): Data {
         return list[position]
@@ -20,15 +23,26 @@ class MainViewModel : ViewModel(){
     }
 
     fun isTurnedOn(ambientRec: Data): Boolean {
-        return turnedOnAmbientItemList.contains(ambientRec)
+        Log.i("XXX", "turnedOnAmbientItemList: ${turnedOnAmbientItemList.value}")
+        if (turnedOnAmbientItemList.value != null) {
+            return turnedOnAmbientItemList.value!!.contains(ambientRec)
+        }
+        return false
     }
 
-    fun addTurnedOnAmbientItemLList(ambientRec: Data) {
-        turnedOnAmbientItemList.add(ambientRec)
+    private fun addTurnedOnAmbientItemLList(ambientRec: Data) {
+        var turnedOnAmbientItems = turnedOnAmbientItemList.value
+        if (turnedOnAmbientItems == null) {
+            turnedOnAmbientItems = mutableListOf()
+        }
+        turnedOnAmbientItems!!.add(ambientRec)
+        turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
     }
 
-    fun removeTurnedOnAmbientItemList(ambientRec: Data) {
-        turnedOnAmbientItemList.remove(ambientRec)
+    private fun removeTurnedOnAmbientItemList(ambientRec: Data) {
+        val turnedOnAmbientItems = turnedOnAmbientItemList.value
+        turnedOnAmbientItems!!.remove(ambientRec)
+        turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
     }
 
     fun toggleTunedOn(ambientRec: Data) {
@@ -37,5 +51,9 @@ class MainViewModel : ViewModel(){
         } else {
             addTurnedOnAmbientItemLList(ambientRec)
         }
+    }
+
+    fun getTurnedOnAmbientItemList(): LiveData<MutableList<Data>> {
+        return turnedOnAmbientItemList
     }
 }

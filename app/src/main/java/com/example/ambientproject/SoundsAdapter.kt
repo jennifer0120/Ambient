@@ -65,21 +65,22 @@ class SoundsAdapter(private val viewModel: MainViewModel)
 //        binding.itemPic.setImageResource(R.drawable.rain)
         binding.itemPic.alpha = 0.5f
         binding.itemPic.setImageResource(item.icon)
-        binding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
+//        binding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
+
     }
 
     fun setItemDisplay(turnedOn: Boolean, rowBinding: RowBinding) {
         if (turnedOn) {
             rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#87A2FB"))
-            rowBinding.itemPic.setColorFilter(Color.parseColor("#EEEEEE"))
+//            rowBinding.itemPic.setColorFilter(Color.parseColor("#EEEEEE"))
             rowBinding.itemText.setTextColor(Color.parseColor("#EEEEEE"))
-//            rowBinding.itemPic.alpha = 1.0f
+            rowBinding.itemPic.alpha = 1.0f
 
         } else {
             rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#F9F6F2"))
-            rowBinding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
+//            rowBinding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
             rowBinding.itemText.setTextColor(Color.parseColor("#000000"))
-//            rowBinding.itemPic.alpha = 0.5f
+            rowBinding.itemPic.alpha = 0.5f
         }
     }
 
