@@ -1,5 +1,7 @@
 package com.example.ambientproject
 
+import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.media.MediaPlayer
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ambientproject.databinding.RowBinding
 
@@ -15,6 +18,7 @@ class SoundsAdapter(private val viewModel: MainViewModel)
     : RecyclerView.Adapter<SoundsAdapter.VH>() {
         companion object {
             val TAG = "SoundsAdapter"
+            val playerMap: HashMap<String, MediaPlayer> = HashMap()
         }
 
     private fun getPos(holder: RecyclerView.ViewHolder): Int {
@@ -41,7 +45,7 @@ class SoundsAdapter(private val viewModel: MainViewModel)
                     val turnedOn = viewModel.isTurnedOn(item)
                     item.let {
                         setItemDisplay(turnedOn, rowBinding)
-
+                        playSongClip(turnedOn, item, context)
                     }
                 }
             }
@@ -73,7 +77,18 @@ class SoundsAdapter(private val viewModel: MainViewModel)
             rowBinding.itemText.setTextColor(Color.parseColor("#000000"))
         }
     }
-    fun playSongClip() {
 
+    fun playSongClip(turnedOn: Boolean, item: Data, context: Context) {
+        if (turnedOn) {
+            playerMap[item.id] = MediaPlayer.create(context, item.rawSongId)
+            playerMap[item.id]!!.start()
+        } else {
+            if (playerMap[item.id] != null) {
+                playerMap[item.id]!!.stop()
+                playerMap[item.id]!!.reset()
+                playerMap[item.id]!!.release()
+            }
+
+        }
     }
 }
