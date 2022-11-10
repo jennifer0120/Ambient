@@ -22,12 +22,9 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         val navView: BottomNavigationView = binding.navView
-        Log.i("XXX", "navView: $navView")
 
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-        Log.i("XXX", "navController: $navController")
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(

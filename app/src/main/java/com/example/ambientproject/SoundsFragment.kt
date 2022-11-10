@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +35,8 @@ class SoundsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 2)
-        binding.recyclerView.adapter = SoundsAdapter(viewModel)
+        binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
+        binding.rainRecyclerView.adapter = SoundsAdapter(viewModel)
 
         val turnedOnAmbientItemList = viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->
@@ -54,7 +55,6 @@ class SoundsFragment: Fragment() {
                 }
             }
         }
-
     }
 
     override fun onDestroyView() {

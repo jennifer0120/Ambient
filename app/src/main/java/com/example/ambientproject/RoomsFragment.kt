@@ -35,8 +35,8 @@ class RoomsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.layoutManager = GridLayoutManager(binding.recyclerView.context, 2)
-        binding.recyclerView.adapter = RoomsAdapter(roomViewModel)
+        binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
+        binding.rainRecyclerView.adapter = RoomsAdapter(roomViewModel)
     }
 
     override fun onDestroyView() {

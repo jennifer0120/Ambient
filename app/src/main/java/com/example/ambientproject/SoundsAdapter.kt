@@ -62,33 +62,23 @@ class SoundsAdapter(private val viewModel: MainViewModel)
         val item = viewModel.getItemAt(position)
         val binding = holder.rowBinding
         binding.itemText.text = item.name
-//        binding.itemPic.setImageResource(R.drawable.rain)
-        binding.itemPic.alpha = 0.5f
-        binding.itemPic.setImageResource(item.icon)
-//        binding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
-
     }
 
     fun setItemDisplay(turnedOn: Boolean, rowBinding: RowBinding) {
         if (turnedOn) {
-            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#87A2FB"))
-//            rowBinding.itemPic.setColorFilter(Color.parseColor("#EEEEEE"))
-            rowBinding.itemText.setTextColor(Color.parseColor("#EEEEEE"))
-            rowBinding.itemPic.alpha = 1.0f
+            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#023047"))
+            rowBinding.itemText.setTextColor(Color.parseColor("#FFFFFF"))
 
         } else {
-            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#F9F6F2"))
-//            rowBinding.itemPic.setColorFilter(Color.parseColor("#B1BCBE"))
-            rowBinding.itemText.setTextColor(Color.parseColor("#000000"))
-            rowBinding.itemPic.alpha = 0.5f
+            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#219ebc"))
+            rowBinding.cardView.cardElevation = 8.0f
         }
     }
 
     fun playSongClip(turnedOn: Boolean, item: Data, context: Context) {
         if (turnedOn) {
-//            playerMap[item.id] = MediaPlayer.create(context, item.rawSongId)
             playerMap[item.id] = MediaPlayer()
-            playerMap[item.id]!!.setDataSource("https://firebasestorage.googleapis.com/v0/b/ambient-20983.appspot.com/o/audioTesting.m4a?alt=media&token=fa93ecbc-523a-480e-b568-e1b24231756b")
+            playerMap[item.id]!!.setDataSource(item.rawSongId)
             playerMap[item.id]!!.prepare()
             playerMap[item.id]!!.start()
         } else {

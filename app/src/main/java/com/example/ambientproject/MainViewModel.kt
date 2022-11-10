@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel(){
     private var repository = Repository()
 
-    private var list = repository.fetchData("rain_series")
+    private var list = repository.fetchData()
 
     // Maintain a separate list of all the ambient items turned on
     private var turnedOnAmbientItemList = MutableLiveData<MutableList<Data>>()
@@ -35,12 +35,14 @@ class MainViewModel : ViewModel(){
             turnedOnAmbientItems = mutableListOf()
         }
         turnedOnAmbientItems!!.add(ambientRec)
+        turnedOnAmbientItemList.value = turnedOnAmbientItems!!
         turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
     }
 
     private fun removeTurnedOnAmbientItemList(ambientRec: Data) {
         val turnedOnAmbientItems = turnedOnAmbientItemList.value
         turnedOnAmbientItems!!.remove(ambientRec)
+        turnedOnAmbientItemList.value = turnedOnAmbientItems!!
         turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
     }
 
