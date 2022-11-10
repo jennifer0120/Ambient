@@ -65,13 +65,13 @@ class SoundsAdapter(private val viewModel: MainViewModel)
     }
 
     fun setItemDisplay(turnedOn: Boolean, rowBinding: RowBinding) {
+        Log.i("XXX", "turnedOn: ${turnedOn}")
         if (turnedOn) {
-            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#023047"))
-            rowBinding.itemText.setTextColor(Color.parseColor("#FFFFFF"))
-
+            rowBinding.cardView.alpha = 1.0f
+            rowBinding.cardView.setCardBackgroundColor(Color.parseColor("#023047"))
         } else {
-            rowBinding.cardViewConstraint.setBackgroundColor(Color.parseColor("#219ebc"))
-            rowBinding.cardView.cardElevation = 8.0f
+            rowBinding.cardView.alpha = 0.5f
+            rowBinding.cardView.setCardBackgroundColor(Color.parseColor("#219ebc"))
         }
     }
 

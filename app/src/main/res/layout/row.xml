@@ -13,7 +13,7 @@
             app:cardCornerRadius="5dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="#219ebc"
+            app:cardBackgroundColor="#80219ebc"
             android:id="@+id/cardView"
             >
 
