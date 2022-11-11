@@ -1,14 +1,12 @@
 package edu.cs371m.reddit.ui
 
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ambientproject.Data
-import com.example.ambientproject.MainViewModel
+import com.example.ambientproject.LabSoundViewModel
 import com.example.ambientproject.databinding.SelectedRowBinding
 
 /**
@@ -23,7 +21,7 @@ import com.example.ambientproject.databinding.SelectedRowBinding
 // So you can copy the old list, change it into a new list, then submit the new list.
 //
 // You can call adapterPosition to get the index of the selected item
-class CreateFocusSessionRowAdapter(private val viewModel: MainViewModel)
+class CreateFocusSessionRowAdapter(private val viewModel: LabSoundViewModel)
     : ListAdapter<Data, CreateFocusSessionRowAdapter.VH>(RedditDiff()) {
 
     inner class VH(val binding: SelectedRowBinding)

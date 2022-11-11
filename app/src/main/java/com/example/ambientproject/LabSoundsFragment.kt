@@ -1,6 +1,5 @@
 package com.example.ambientproject
 
-import android.R
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,18 +13,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ambientproject.databinding.RecyclerMainBinding
 
 
-class SoundsFragment: Fragment() {
+class LabSoundsFragment: Fragment() {
     companion object {
-        val TAG: String = SoundsFragment::class.java.simpleName
+        val TAG: String = LabSoundsFragment::class.java.simpleName
         private const val createFocusSessionFragTag = "createFocusSessionFragTag"
-        fun newInstance(): SoundsFragment {
-            return SoundsFragment()
+        fun newInstance(): LabSoundsFragment {
+            return LabSoundsFragment()
         }
     }
 
     private var _binding: RecyclerMainBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: LabSoundViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +39,7 @@ class SoundsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
-        binding.rainRecyclerView.adapter = SoundsAdapter(viewModel)
+        binding.rainRecyclerView.adapter = LabSoundAdapter(viewModel)
 
         val turnedOnAmbientItemList = viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->

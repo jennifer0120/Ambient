@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/navigation_sounds"
-        android:name="com.example.ambientproject.SoundsFragment"
+        android:name="com.example.ambientproject.LabSoundsFragment"
         tools:layout="@layout/recycler_main" />
 
     <fragment

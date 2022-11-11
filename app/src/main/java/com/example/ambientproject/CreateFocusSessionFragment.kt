@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import com.example.ambientproject.databinding.FragmentRvBinding
+import com.example.ambientproject.databinding.CreateFocusSessionFragmentBinding
 import edu.cs371m.reddit.ui.CreateFocusSessionRowAdapter
 
 class CreateFocusSessionFragment : Fragment() {
@@ -24,16 +24,16 @@ class CreateFocusSessionFragment : Fragment() {
         }
     }
 
-    private var _binding: FragmentRvBinding? = null
+    private var _binding: CreateFocusSessionFragmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: LabSoundViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRvBinding.inflate(inflater)
+        _binding = CreateFocusSessionFragmentBinding.inflate(inflater)
         return binding.root
     }
 
@@ -61,7 +61,7 @@ class CreateFocusSessionFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 activity?.supportFragmentManager?.popBackStack()
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.nav_host_fragment_activity_main, SoundsFragment.newInstance(), soundsFragmentTag)
+                    ?.replace(R.id.nav_host_fragment_activity_main, LabSoundsFragment.newInstance(), soundsFragmentTag)
                     ?.addToBackStack(null)
                     ?.commit()
                 return true

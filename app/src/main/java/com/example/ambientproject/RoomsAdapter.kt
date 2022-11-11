@@ -1,11 +1,9 @@
 package com.example.ambientproject
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ambientproject.databinding.RoomItemBinding
-import com.example.ambientproject.databinding.RowBinding
 
 class RoomsAdapter(private val roomViewModel: RoomViewModel)
     : RecyclerView.Adapter<RoomsAdapter.VH>() {

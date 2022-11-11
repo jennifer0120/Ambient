@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 
 // TODO: Need to update this class name later on
 // TODO: Create Focus Session is a new activity so the ViewModel is not tied to it.
-class MainViewModel : ViewModel(){
+class LabSoundViewModel : ViewModel(){
     private var repository = Repository()
 
     private var list = repository.fetchData()

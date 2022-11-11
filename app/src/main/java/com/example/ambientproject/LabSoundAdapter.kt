@@ -1,21 +1,15 @@
 package com.example.ambientproject
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getColor
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ambientproject.databinding.RowBinding
+import com.example.ambientproject.databinding.LabSoundItemBinding
 
-class SoundsAdapter(private val viewModel: MainViewModel)
-    : RecyclerView.Adapter<SoundsAdapter.VH>() {
+class LabSoundAdapter(private val viewModel: LabSoundViewModel)
+    : RecyclerView.Adapter<LabSoundAdapter.VH>() {
         companion object {
             val TAG = "SoundsAdapter"
             val playerMap: HashMap<String, MediaPlayer> = HashMap()
@@ -34,17 +28,17 @@ class SoundsAdapter(private val viewModel: MainViewModel)
     }
 
     // ViewHolder pattern
-    inner class VH(val rowBinding: RowBinding)
-        : RecyclerView.ViewHolder(rowBinding.root) {
+    inner class VH(val labSoundItemBinding: LabSoundItemBinding)
+        : RecyclerView.ViewHolder(labSoundItemBinding.root) {
             init {
-                rowBinding.root.setOnClickListener {
+                labSoundItemBinding.root.setOnClickListener {
                     val position = getPos(this)
                     val context = it.context
                     val item = viewModel.getItemAt(position)
                     viewModel.toggleTunedOn(item)
                     val turnedOn = viewModel.isTurnedOn(item)
                     item.let {
-                        setItemDisplay(turnedOn, rowBinding)
+                        setItemDisplay(turnedOn, labSoundItemBinding)
                         playSongClip(turnedOn, item, context)
                     }
                 }
@@ -52,7 +46,7 @@ class SoundsAdapter(private val viewModel: MainViewModel)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val rowBinding = RowBinding.inflate(
+        val rowBinding = LabSoundItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
         return VH(rowBinding)
@@ -60,18 +54,18 @@ class SoundsAdapter(private val viewModel: MainViewModel)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = viewModel.getItemAt(position)
-        val binding = holder.rowBinding
+        val binding = holder.labSoundItemBinding
         binding.itemPic.setBackgroundResource(item.image)
         binding.itemText.text = item.name
     }
 
-    fun setItemDisplay(turnedOn: Boolean, rowBinding: RowBinding) {
+    fun setItemDisplay(turnedOn: Boolean, labSoundItemBinding: LabSoundItemBinding) {
         if (turnedOn) {
-            rowBinding.cardView.alpha = 1.0f
-            rowBinding.cardView.setCardBackgroundColor(Color.parseColor("#023047"))
+            labSoundItemBinding.cardView.alpha = 1.0f
+            labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#023047"))
         } else {
-            rowBinding.cardView.alpha = 0.5f
-            rowBinding.cardView.setCardBackgroundColor(Color.parseColor("#219ebc"))
+            labSoundItemBinding.cardView.alpha = 0.5f
+            labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#219ebc"))
         }
     }
 
