@@ -61,11 +61,11 @@ class SoundsAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = viewModel.getItemAt(position)
         val binding = holder.rowBinding
+        binding.itemPic.setBackgroundResource(item.image)
         binding.itemText.text = item.name
     }
 
     fun setItemDisplay(turnedOn: Boolean, rowBinding: RowBinding) {
-        Log.i("XXX", "turnedOn: ${turnedOn}")
         if (turnedOn) {
             rowBinding.cardView.alpha = 1.0f
             rowBinding.cardView.setCardBackgroundColor(Color.parseColor("#023047"))

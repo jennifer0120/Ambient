@@ -14,7 +14,11 @@ import com.example.ambientproject.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val createFocusSessionFragTag = "favoritesFragTag"
+    }
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 // TODO: Need to update this class name later on
+// TODO: Create Focus Session is a new activity so the ViewModel is not tied to it.
 class MainViewModel : ViewModel(){
     private var repository = Repository()
 
@@ -18,8 +19,16 @@ class MainViewModel : ViewModel(){
         return list[position]
     }
 
+    fun getSelectedItemAt(position: Int): Data {
+        return turnedOnAmbientItemList.value!![position]
+    }
+
     fun getItemCount() : Int {
         return list.size
+    }
+
+    fun getTurnedOnAmbientItemCount(): Int {
+        return turnedOnAmbientItemList.value?.size ?: 0
     }
 
     fun isTurnedOn(ambientRec: Data): Boolean {
@@ -37,6 +46,7 @@ class MainViewModel : ViewModel(){
         turnedOnAmbientItems!!.add(ambientRec)
         turnedOnAmbientItemList.value = turnedOnAmbientItems!!
         turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
+        Log.i("XXX", "turnedOnAmbientItemList: ${turnedOnAmbientItemList.value!!.size}")
     }
 
     private fun removeTurnedOnAmbientItemList(ambientRec: Data) {
