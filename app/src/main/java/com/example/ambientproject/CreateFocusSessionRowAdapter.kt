@@ -1,5 +1,6 @@
 package edu.cs371m.reddit.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -22,7 +23,7 @@ import com.example.ambientproject.databinding.SelectedRowBinding
 //
 // You can call adapterPosition to get the index of the selected item
 class CreateFocusSessionRowAdapter(private val viewModel: LabSoundViewModel)
-    : ListAdapter<Data, CreateFocusSessionRowAdapter.VH>(RedditDiff()) {
+    : ListAdapter<Data, CreateFocusSessionRowAdapter.VH>(DataDiff()) {
 
     inner class VH(val binding: SelectedRowBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -34,12 +35,15 @@ class CreateFocusSessionRowAdapter(private val viewModel: LabSoundViewModel)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
+        Log.i("XXX", "onBindViewHolder")
+        Log.i("XXX", "position: $position")
         val binding = holder.binding
         val item = getItem(position)
+        Log.i("XXX", "item: ${item.name}")
         binding.selectedMusicText.text = item.name
     }
 
-    class RedditDiff : DiffUtil.ItemCallback<Data>() {
+    class DataDiff : DiffUtil.ItemCallback<Data>() {
         override fun areItemsTheSame(oldItem: Data, newItem: Data): Boolean {
             return oldItem.id == newItem.id
         }

@@ -56,7 +56,7 @@ class LabSoundsFragment: Fragment() {
                     // Instead of creating an activity here, create a fragment instead because the viewModel is tied to the activity lifecycle
                     if (requireActivity().supportFragmentManager.findFragmentByTag(createFocusSessionFragTag) == null) {
                         requireActivity().supportFragmentManager.commit {
-                            replace(com.example.ambientproject.R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)
+                            replace(R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)
                             addToBackStack(createFocusSessionFragTag)
                             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         }

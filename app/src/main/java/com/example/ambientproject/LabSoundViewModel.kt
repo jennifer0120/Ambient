@@ -19,16 +19,8 @@ class LabSoundViewModel : ViewModel(){
         return list[position]
     }
 
-    fun getSelectedItemAt(position: Int): Data {
-        return turnedOnAmbientItemList.value!![position]
-    }
-
     fun getItemCount() : Int {
         return list.size
-    }
-
-    fun getTurnedOnAmbientItemCount(): Int {
-        return turnedOnAmbientItemList.value?.size ?: 0
     }
 
     fun isTurnedOn(ambientRec: Data): Boolean {

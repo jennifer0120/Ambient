@@ -1,6 +1,7 @@
 package com.example.ambientproject
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -48,6 +49,7 @@ class CreateFocusSessionFragment : Fragment() {
         rv.itemAnimator = null
         viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             selectedList ->
+            Log.i("XXX", "selectedList: ${selectedList.size}")
             adapter.submitList(selectedList)
             adapter.notifyDataSetChanged()
         }
