@@ -50,7 +50,8 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
         val item = focusSessionViewModel.getItemAt(position)
         val binding = holder.sessionItemBinding
         if (item != null) {
-            binding.itemText.text = item.title
+            binding.itemTitle.text = item.title
+            binding.itemDescription.text = item.description
         }
     }
 

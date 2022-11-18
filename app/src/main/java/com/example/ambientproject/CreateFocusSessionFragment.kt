@@ -43,7 +43,6 @@ class CreateFocusSessionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.i("XXX", "CreateFocusSessionFragment onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         setDisplayHomeAsUpEnabled(true)
 
@@ -58,10 +57,11 @@ class CreateFocusSessionFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
+
         binding.createFocusSessionButton.setOnClickListener {
             labSoundViewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
                 selectedList ->
-                val focusSession = FocusSession("123", "Test Focus Session", "Test Focus Session Description", selectedList.map { item -> item.rawSongId })
+                val focusSession = FocusSession("123", binding.sessionTitleEditText.text.toString(), binding.sessionDescriptionEditText.text.toString(), selectedList.map { item -> item.rawSongId })
                 focusSessionModel.insertFocusSession(focusSession)
                 activity?.supportFragmentManager?.findFragmentByTag(createFocusSessionFragTag)
                     ?.let { it1 ->
