@@ -57,4 +57,9 @@ class LabSoundViewModel : ViewModel(){
     fun getTurnedOnAmbientItemList(): LiveData<MutableList<LabSound>> {
         return turnedOnAmbientItemList
     }
+
+    fun clearOutTurnedOnAmbientItemList() {
+        turnedOnAmbientItemList.value = mutableListOf()
+        turnedOnAmbientItemList.postValue(mutableListOf())
+    }
 }

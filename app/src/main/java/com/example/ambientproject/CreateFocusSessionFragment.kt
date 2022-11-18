@@ -59,17 +59,25 @@ class CreateFocusSessionFragment : Fragment() {
 
 
         binding.createFocusSessionButton.setOnClickListener {
-            labSoundViewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
-                selectedList ->
-                val focusSession = FocusSession("123", binding.sessionTitleEditText.text.toString(), binding.sessionDescriptionEditText.text.toString(), selectedList.map { item -> item.rawSongId })
-                focusSessionModel.insertFocusSession(focusSession)
-                activity?.supportFragmentManager?.findFragmentByTag(createFocusSessionFragTag)
-                    ?.let { it1 ->
-                        activity?.supportFragmentManager?.beginTransaction()
-                            ?.remove(it1)
-                            ?.commit()
+            if (binding.sessionTitleEditText.text.toString().isNotEmpty()) {
+                labSoundViewModel.getTurnedOnAmbientItemList()
+                    .observe(viewLifecycleOwner) { selectedList ->
+                        val focusSession = FocusSession(
+                            "123",
+                            binding.sessionTitleEditText.text.toString(),
+                            binding.sessionDescriptionEditText.text.toString(),
+                            selectedList.map { item -> item.rawSongId })
+                        focusSessionModel.insertFocusSession(focusSession)
+                        activity?.supportFragmentManager?.findFragmentByTag(
+                            createFocusSessionFragTag
+                        )
+                            ?.let { it1 ->
+                                activity?.supportFragmentManager?.beginTransaction()
+                                    ?.remove(it1)
+                                    ?.commit()
+                            }
+                        findNavController().navigate(R.id.navigation_session)
                     }
-                findNavController().navigate(R.id.navigation_session)
             }
         }
 
@@ -80,11 +88,20 @@ class CreateFocusSessionFragment : Fragment() {
             }
             // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                activity?.supportFragmentManager?.popBackStack()
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.nav_host_fragment_activity_main, LabSoundsFragment.newInstance(), soundsFragmentTag)
-                    ?.addToBackStack(null)
-                    ?.commit()
+//                activity?.supportFragmentManager?.popBackStack()
+//                activity?.supportFragmentManager?.beginTransaction()
+//                    ?.replace(R.id.nav_host_fragment_activity_main, LabSoundsFragment.newInstance(), soundsFragmentTag)
+//                    ?.addToBackStack(null)
+//                    ?.commit()
+                activity?.supportFragmentManager?.findFragmentByTag(
+                    createFocusSessionFragTag
+                )
+                    ?.let { it1 ->
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.remove(it1)
+                            ?.commit()
+                    }
+                findNavController().navigate(R.id.navigation_sounds)
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)

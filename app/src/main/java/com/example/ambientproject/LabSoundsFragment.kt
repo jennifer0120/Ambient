@@ -18,6 +18,7 @@ class LabSoundsFragment: Fragment() {
     companion object {
         val TAG: String = LabSoundsFragment::class.java.simpleName
         private const val createFocusSessionFragTag = "createFocusSessionFragTag"
+        private const val sessionsFragment = "sessionsFragmentTag"
         fun newInstance(): LabSoundsFragment {
             return LabSoundsFragment()
         }
@@ -38,12 +39,15 @@ class LabSoundsFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.i("XXX", "LabsoundFragment OnViewCreated")
         super.onViewCreated(view, savedInstanceState)
+        val adapter = LabSoundAdapter(viewModel)
         binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
-        binding.rainRecyclerView.adapter = LabSoundAdapter(viewModel)
+        binding.rainRecyclerView.adapter = adapter
 
-        val turnedOnAmbientItemList = viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
+        viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->
+            Log.i("XXX", "itemList: ${itemList.size}")
             if (itemList.isEmpty()) {
                 binding.createSession.setBackgroundColor(Color.parseColor("#EFEFEF"))
                 binding.createSession.setTextColor(Color.parseColor("#000000"))
@@ -57,7 +61,7 @@ class LabSoundsFragment: Fragment() {
                     // Instead of creating an activity here, create a fragment instead because the viewModel is tied to the activity lifecycle
                     if (requireActivity().supportFragmentManager.findFragmentByTag(createFocusSessionFragTag) == null) {
                         requireActivity().supportFragmentManager.commit {
-                            add(R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)
+                            replace(R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)
                             addToBackStack(createFocusSessionFragTag)
                             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         }
