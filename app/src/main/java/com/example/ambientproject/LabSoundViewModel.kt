@@ -6,16 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 // TODO: Need to update this class name later on
-// TODO: Create Focus Session is a new activity so the ViewModel is not tied to it.
 class LabSoundViewModel : ViewModel(){
-    private var repository = Repository()
+    private var repository = LabSoundRepository()
 
     private var list = repository.fetchData()
 
     // Maintain a separate list of all the ambient items turned on
-    private var turnedOnAmbientItemList = MutableLiveData<MutableList<Data>>()
+    private var turnedOnAmbientItemList = MutableLiveData<MutableList<LabSound>>()
 
-    fun getItemAt(position: Int): Data {
+    fun getItemAt(position: Int): LabSound {
         return list[position]
     }
 
@@ -23,14 +22,14 @@ class LabSoundViewModel : ViewModel(){
         return list.size
     }
 
-    fun isTurnedOn(ambientRec: Data): Boolean {
+    fun isTurnedOn(ambientRec: LabSound): Boolean {
         if (turnedOnAmbientItemList.value != null) {
             return turnedOnAmbientItemList.value!!.contains(ambientRec)
         }
         return false
     }
 
-    private fun addTurnedOnAmbientItemLList(ambientRec: Data) {
+    private fun addTurnedOnAmbientItemLList(ambientRec: LabSound) {
         var turnedOnAmbientItems = turnedOnAmbientItemList.value
         if (turnedOnAmbientItems == null) {
             turnedOnAmbientItems = mutableListOf()
@@ -38,17 +37,16 @@ class LabSoundViewModel : ViewModel(){
         turnedOnAmbientItems!!.add(ambientRec)
         turnedOnAmbientItemList.value = turnedOnAmbientItems!!
         turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
-        Log.i("XXX", "turnedOnAmbientItemList: ${turnedOnAmbientItemList.value!!.size}")
     }
 
-    private fun removeTurnedOnAmbientItemList(ambientRec: Data) {
+    private fun removeTurnedOnAmbientItemList(ambientRec: LabSound) {
         val turnedOnAmbientItems = turnedOnAmbientItemList.value
         turnedOnAmbientItems!!.remove(ambientRec)
         turnedOnAmbientItemList.value = turnedOnAmbientItems!!
         turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
     }
 
-    fun toggleTunedOn(ambientRec: Data) {
+    fun toggleTunedOn(ambientRec: LabSound) {
         if (isTurnedOn(ambientRec)) {
             removeTurnedOnAmbientItemList(ambientRec)
         } else {
@@ -56,7 +54,7 @@ class LabSoundViewModel : ViewModel(){
         }
     }
 
-    fun getTurnedOnAmbientItemList(): LiveData<MutableList<Data>> {
+    fun getTurnedOnAmbientItemList(): LiveData<MutableList<LabSound>> {
         return turnedOnAmbientItemList
     }
 }

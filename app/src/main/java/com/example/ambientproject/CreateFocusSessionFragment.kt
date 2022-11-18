@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.ambientproject.databinding.CreateFocusSessionFragmentBinding
 import edu.cs371m.reddit.ui.CreateFocusSessionRowAdapter
 
@@ -20,6 +21,8 @@ class CreateFocusSessionFragment : Fragment() {
 
     companion object {
         private const val soundsFragmentTag = "soundsFragmentTag"
+        private const val sessionsFragmentTag = "sessionsFragmentTag"
+        private const val createFocusSessionFragTag = "createFocusSessionFragTag"
         fun newInstance(): CreateFocusSessionFragment {
             return CreateFocusSessionFragment()
         }
@@ -27,7 +30,8 @@ class CreateFocusSessionFragment : Fragment() {
 
     private var _binding: CreateFocusSessionFragmentBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: LabSoundViewModel by activityViewModels()
+    private val labSoundViewModel: LabSoundViewModel by activityViewModels()
+    private val focusSessionModel: FocusSessionViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,19 +43,34 @@ class CreateFocusSessionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.i("XXX", "CreateFocusSessionFragment onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         setDisplayHomeAsUpEnabled(true)
 
         val rv = binding.recyclerView
-        val adapter = CreateFocusSessionRowAdapter(viewModel)
+        val adapter = CreateFocusSessionRowAdapter(labSoundViewModel)
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(activity)
         rv.itemAnimator = null
-        viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
+        labSoundViewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             selectedList ->
-            Log.i("XXX", "selectedList: ${selectedList.size}")
             adapter.submitList(selectedList)
             adapter.notifyDataSetChanged()
+        }
+
+        binding.createFocusSessionButton.setOnClickListener {
+            labSoundViewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
+                selectedList ->
+                val focusSession = FocusSession("123", "Test Focus Session", "Test Focus Session Description", selectedList.map { item -> item.rawSongId })
+                focusSessionModel.insertFocusSession(focusSession)
+                activity?.supportFragmentManager?.findFragmentByTag(createFocusSessionFragTag)
+                    ?.let { it1 ->
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.remove(it1)
+                            ?.commit()
+                    }
+                findNavController().navigate(R.id.navigation_session)
+            }
         }
 
         val menuHost: MenuHost = requireActivity()
@@ -73,9 +92,10 @@ class CreateFocusSessionFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        Log.i("XXX", "CreateFocusSession onDestroyView")
         // XXX Write me
         // Don't let back to home button stay when we exit favorites
-        setDisplayHomeAsUpEnabled(false)
         super.onDestroyView()
+        setDisplayHomeAsUpEnabled(false)
     }
 }

@@ -27,11 +27,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".CreateFocusSessionActivity"
-            android:parentActivityName=".CreateFocusSessionActivity"
-            android:label="Create Focus Session">
-        </activity>
     </application>
 
 </manifest>

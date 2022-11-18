@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ambientproject.Data
+import com.example.ambientproject.LabSound
 import com.example.ambientproject.LabSoundViewModel
-import com.example.ambientproject.databinding.SelectedRowBinding
+import com.example.ambientproject.databinding.SelectedLabSoundRowBinding
 
 /**
  * Created by witchel on 8/25/2019
@@ -23,31 +23,28 @@ import com.example.ambientproject.databinding.SelectedRowBinding
 //
 // You can call adapterPosition to get the index of the selected item
 class CreateFocusSessionRowAdapter(private val viewModel: LabSoundViewModel)
-    : ListAdapter<Data, CreateFocusSessionRowAdapter.VH>(DataDiff()) {
+    : ListAdapter<LabSound, CreateFocusSessionRowAdapter.VH>(DataDiff()) {
 
-    inner class VH(val binding: SelectedRowBinding)
+    inner class VH(val binding: SelectedLabSoundRowBinding)
         : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val binding = SelectedRowBinding.inflate(LayoutInflater.from(parent.context),
+        val binding = SelectedLabSoundRowBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
         return VH(binding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.i("XXX", "onBindViewHolder")
-        Log.i("XXX", "position: $position")
         val binding = holder.binding
         val item = getItem(position)
-        Log.i("XXX", "item: ${item.name}")
         binding.selectedMusicText.text = item.name
     }
 
-    class DataDiff : DiffUtil.ItemCallback<Data>() {
-        override fun areItemsTheSame(oldItem: Data, newItem: Data): Boolean {
+    class DataDiff : DiffUtil.ItemCallback<LabSound>() {
+        override fun areItemsTheSame(oldItem: LabSound, newItem: LabSound): Boolean {
             return oldItem.id == newItem.id
         }
-        override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
+        override fun areContentsTheSame(oldItem: LabSound, newItem: LabSound): Boolean {
             return oldItem.id == newItem.id && oldItem.group == newItem.group && oldItem.name == newItem.name && oldItem.image == newItem.image && oldItem.rawSongId == newItem.rawSongId
         }
     }

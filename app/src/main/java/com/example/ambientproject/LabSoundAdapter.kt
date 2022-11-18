@@ -69,7 +69,7 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
         }
     }
 
-    fun playSongClip(turnedOn: Boolean, item: Data, context: Context) {
+    fun playSongClip(turnedOn: Boolean, item: LabSound, context: Context) {
         if (turnedOn) {
             playerMap[item.id] = MediaPlayer()
             playerMap[item.id]!!.setDataSource(item.rawSongId)

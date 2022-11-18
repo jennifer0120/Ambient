@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_rooms"
+    app:startDestination="@+id/navigation_session"
     >
 
     <fragment
-        android:id="@+id/navigation_rooms"
-        android:name="com.example.ambientproject.RoomsFragment"
-        tools:layout="@layout/recycler_main"
+        android:id="@+id/navigation_session"
+        android:name="com.example.ambientproject.SessionsFragment"
+        tools:layout="@layout/session_recycler_main"
         />
 
     <fragment
