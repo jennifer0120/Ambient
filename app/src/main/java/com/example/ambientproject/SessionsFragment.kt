@@ -36,8 +36,19 @@ class SessionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.sessionRecyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.sessionRecyclerView.adapter = SessionAdapter(focusSessionModel)
+
+        val rv = binding.sessionRecyclerView
+        val adapter = SessionAdapter(focusSessionModel)
+        rv.adapter = adapter
+        rv.layoutManager = LinearLayoutManager(activity)
+        rv.itemAnimator = null
+
+        focusSessionModel.getList().observe(viewLifecycleOwner) {
+            list ->
+            Log.i("XXX", "list: $list")
+            adapter.submitList(list)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     override fun onDestroyView() {

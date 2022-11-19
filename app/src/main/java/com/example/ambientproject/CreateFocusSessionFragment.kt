@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.ambientproject.databinding.CreateFocusSessionFragmentBinding
 import edu.cs371m.reddit.ui.CreateFocusSessionRowAdapter
+import kotlin.random.Random
 
 class CreateFocusSessionFragment : Fragment() {
     private fun setDisplayHomeAsUpEnabled(value : Boolean) {
@@ -57,13 +58,13 @@ class CreateFocusSessionFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-
+        binding.root.isClickable = true
         binding.createFocusSessionButton.setOnClickListener {
             if (binding.sessionTitleEditText.text.toString().isNotEmpty()) {
                 labSoundViewModel.getTurnedOnAmbientItemList()
                     .observe(viewLifecycleOwner) { selectedList ->
                         val focusSession = FocusSession(
-                            "123",
+                            Random.nextInt(0, 10000).toString(),
                             binding.sessionTitleEditText.text.toString(),
                             binding.sessionDescriptionEditText.text.toString(),
                             selectedList.map { item -> item.rawSongId })
@@ -86,13 +87,7 @@ class CreateFocusSessionFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Menu is already inflated by main activity
             }
-            // XXX Write me, onMenuItemSelected
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                activity?.supportFragmentManager?.popBackStack()
-//                activity?.supportFragmentManager?.beginTransaction()
-//                    ?.replace(R.id.nav_host_fragment_activity_main, LabSoundsFragment.newInstance(), soundsFragmentTag)
-//                    ?.addToBackStack(null)
-//                    ?.commit()
                 activity?.supportFragmentManager?.findFragmentByTag(
                     createFocusSessionFragTag
                 )

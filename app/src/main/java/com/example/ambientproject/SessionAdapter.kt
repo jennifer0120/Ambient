@@ -1,15 +1,18 @@
 package com.example.ambientproject
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ambientproject.databinding.RoomItemBinding
 import com.example.ambientproject.databinding.SessionItemBinding
 
 class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
-    : RecyclerView.Adapter<SessionAdapter.VH>() {
+    : ListAdapter<FocusSession, SessionAdapter.VH>(SessionDiff()) {
         companion object {
-            val TAG = "RoomsAdapter"
+            val TAG = "SessionAdapter"
         }
 
     private fun getPos(holder: RecyclerView.ViewHolder): Int {
@@ -33,7 +36,6 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
                 val context = it.context
                 val item = focusSessionViewModel.getItemAt(position)
                 item.let {
-                    // TODO: when clicked, it will open up another fragment
                 }
             }
         }
@@ -55,4 +57,13 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
         }
     }
 
+    class SessionDiff : DiffUtil.ItemCallback<FocusSession>() {
+        override fun areItemsTheSame(oldItem: FocusSession, newItem: FocusSession): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: FocusSession, newItem: FocusSession): Boolean {
+            return oldItem.id == newItem.id && oldItem.description == newItem.description && oldItem.title == newItem.title && oldItem.rawSongIdList == newItem.rawSongIdList
+        }
+    }
 }

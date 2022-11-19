@@ -35,13 +35,14 @@ class LabSoundsFragment: Fragment() {
     ): View {
         _binding = RecyclerMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        viewModel.clearOutTurnedOnAmbientItemList()
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.i("XXX", "LabsoundFragment OnViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        val adapter = LabSoundAdapter(viewModel)
+        val adapter = LabSoundAdapter2(viewModel)
         binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
         binding.rainRecyclerView.adapter = adapter
 
@@ -59,12 +60,10 @@ class LabSoundsFragment: Fragment() {
             binding.createSession.setOnClickListener {
                 if (itemList.isNotEmpty()) {
                     // Instead of creating an activity here, create a fragment instead because the viewModel is tied to the activity lifecycle
-                    if (requireActivity().supportFragmentManager.findFragmentByTag(createFocusSessionFragTag) == null) {
-                        requireActivity().supportFragmentManager.commit {
-                            replace(R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)
-                            addToBackStack(createFocusSessionFragTag)
-                            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        }
+                    requireActivity().supportFragmentManager.commit {
+                        replace(R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)
+                        addToBackStack(createFocusSessionFragTag)
+                        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     }
                 }
             }
