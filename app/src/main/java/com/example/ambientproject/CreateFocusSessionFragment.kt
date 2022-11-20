@@ -86,9 +86,10 @@ class CreateFocusSessionFragment : Fragment() {
 
         // Check sign in
         val user = FirebaseAuth.getInstance().currentUser
-        Log.i("XXX", "user: $user")
         if (user == null) {
             binding.createFocusSessionButton.text = "Log in to Create Focus Session"
+        } else {
+            binding.createFocusSessionButton.text = "Create Focus Session"
         }
 
         binding.createFocusSessionButton.setOnClickListener {
