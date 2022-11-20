@@ -1,5 +1,6 @@
 package com.example.ambientproject
 
+import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,6 +12,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.ambientproject.databinding.CreateFocusSessionFragmentBinding
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
 import edu.cs371m.reddit.ui.CreateFocusSessionRowAdapter
 import kotlin.random.Random
 
@@ -33,7 +38,26 @@ class CreateFocusSessionFragment : Fragment() {
     private val binding get() = _binding!!
     private val labSoundViewModel: LabSoundViewModel by activityViewModels()
     private val focusSessionModel: FocusSessionViewModel by activityViewModels()
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) {
+        res -> onSignInResult(res)
+    }
 
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            // Successfully signed in
+            val user = FirebaseAuth.getInstance().currentUser
+            Log.i("XXX", "user has successfull signed in: $user")
+            // ...
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,7 +83,28 @@ class CreateFocusSessionFragment : Fragment() {
         }
 
         binding.root.isClickable = true
+
+        // Check sign in
+        val user = FirebaseAuth.getInstance().currentUser
+        Log.i("XXX", "user: $user")
+        if (user == null) {
+            binding.createFocusSessionButton.text = "Log in to Create Focus Session"
+        }
+
         binding.createFocusSessionButton.setOnClickListener {
+            if (user == null) {
+                // Choose authentication providers
+                val providers = arrayListOf(
+                    AuthUI.IdpConfig.EmailBuilder().build())
+
+                val signInIntent = AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setAvailableProviders(providers)
+                    .setIsSmartLockEnabled(false)
+                    .build()
+                signInLauncher.launch(signInIntent)
+            }
+
             if (binding.sessionTitleEditText.text.toString().isNotEmpty()) {
                 labSoundViewModel.getTurnedOnAmbientItemList()
                     .observe(viewLifecycleOwner) { selectedList ->
