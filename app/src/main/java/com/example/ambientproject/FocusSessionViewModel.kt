@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.text.FieldPosition
 
-data class FocusSession(val id: String, val title: String, val description: String, val rawSongIdList: List<String>)
-
 class FocusSessionViewModel : ViewModel(){
     private var list = MutableLiveData<MutableList<FocusSession>>()
 
