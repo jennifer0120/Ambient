@@ -23,7 +23,6 @@ class FocusSessionViewModel : ViewModel(){
     }
 
     fun getItemAt(position: Int): FocusSession? {
-        Log.i("XXX", "getItemAt position: $position")
         return list.value?.get(position)
     }
 

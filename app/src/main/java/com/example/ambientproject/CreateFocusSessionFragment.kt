@@ -41,23 +41,8 @@ class CreateFocusSessionFragment : Fragment() {
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) {
-        res -> onSignInResult(res)
     }
-
-    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
-        if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
-            Log.i("XXX", "user has successfull signed in: $user")
-            // ...
-        } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
-        }
-    }
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -113,7 +98,7 @@ class CreateFocusSessionFragment : Fragment() {
                             Random.nextInt(0, 10000).toString(),
                             binding.sessionTitleEditText.text.toString(),
                             binding.sessionDescriptionEditText.text.toString(),
-                            selectedList.map { item -> item.rawSongId })
+                            selectedList.map { item -> item.id })
                         focusSessionModel.insertFocusSession(focusSession)
                         activity?.supportFragmentManager?.findFragmentByTag(
                             createFocusSessionFragTag
@@ -123,6 +108,7 @@ class CreateFocusSessionFragment : Fragment() {
                                     ?.remove(it1)
                                     ?.commit()
                             }
+//                        labSoundViewModel.clearOutTurnedOnAmbientItemList()
                         findNavController().navigate(R.id.navigation_session)
                     }
             }
@@ -142,6 +128,7 @@ class CreateFocusSessionFragment : Fragment() {
                             ?.remove(it1)
                             ?.commit()
                     }
+
                 findNavController().navigate(R.id.navigation_sounds)
                 return true
             }

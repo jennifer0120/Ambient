@@ -59,6 +59,9 @@ class LabSoundViewModel : ViewModel(){
     }
 
     fun clearOutTurnedOnAmbientItemList() {
+//        for (item in turnedOnAmbientItemList.value!!) {
+//            removeTurnedOnAmbientItemList(item)
+//        }
         turnedOnAmbientItemList.value = mutableListOf()
         turnedOnAmbientItemList.postValue(mutableListOf())
     }

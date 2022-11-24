@@ -40,7 +40,6 @@ class LabSoundsFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.i("XXX", "LabsoundFragment OnViewCreated")
         super.onViewCreated(view, savedInstanceState)
         val adapter = LabSoundAdapter2(viewModel)
         binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)

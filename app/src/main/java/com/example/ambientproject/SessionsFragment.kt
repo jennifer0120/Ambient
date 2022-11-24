@@ -54,7 +54,6 @@ class SessionsFragment : Fragment() {
         uiScope.launch {
             focusSessionModel.getList().observe(viewLifecycleOwner) {
                     list ->
-                Log.i("XXX", "list: $list")
                 adapter.submitList(list)
                 adapter.notifyDataSetChanged()
             }

@@ -65,7 +65,7 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
         }
 
         override fun areContentsTheSame(oldItem: FocusSession, newItem: FocusSession): Boolean {
-            return oldItem.id == newItem.id && oldItem.description == newItem.description && oldItem.title == newItem.title && oldItem.rawSongIdList == newItem.rawSongIdList
+            return oldItem.id == newItem.id && oldItem.description == newItem.description && oldItem.title == newItem.title && oldItem.labSoundIds == newItem.labSoundIds
         }
     }
 }
