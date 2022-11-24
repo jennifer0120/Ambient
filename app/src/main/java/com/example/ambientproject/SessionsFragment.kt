@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ambientproject.databinding.SessionRecyclerMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class SessionsFragment : Fragment() {
     companion object {
@@ -43,12 +47,19 @@ class SessionsFragment : Fragment() {
         rv.layoutManager = LinearLayoutManager(activity)
         rv.itemAnimator = null
 
-        focusSessionModel.getList().observe(viewLifecycleOwner) {
-            list ->
-            Log.i("XXX", "list: $list")
-            adapter.submitList(list)
-            adapter.notifyDataSetChanged()
+
+        val job = Job()
+        val uiScope = CoroutineScope(Dispatchers.Main + job)
+
+        uiScope.launch {
+            focusSessionModel.getList().observe(viewLifecycleOwner) {
+                    list ->
+                Log.i("XXX", "list: $list")
+                adapter.submitList(list)
+                adapter.notifyDataSetChanged()
+            }
         }
+
     }
 
     override fun onDestroyView() {

@@ -4,34 +4,40 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.FieldPosition
 
 class FocusSessionViewModel : ViewModel(){
     private var list = MutableLiveData<MutableList<FocusSession>>()
 
     private var repository = SessionRepository()
-    private var repositoryList = repository.fetchData()
+//    private var repositoryList = repository.fetchData()
 
-    fun getList(): LiveData<MutableList<FocusSession>> {
+    suspend fun getList(): LiveData<MutableList<FocusSession>> {
+        val dataList = repository.fetchData()
+        list.value = dataList.toMutableList()
+
         return list
     }
 
     fun getItemAt(position: Int): FocusSession? {
         Log.i("XXX", "getItemAt position: $position")
-        return repositoryList[position]
+        return list.value?.get(position)
     }
 
     fun getItemCount(): Int {
-        return repositoryList.size
+        return list.value?.size ?: 0
     }
 
     fun insertFocusSession(focusSession: FocusSession) {
+        repository.insertData(focusSession)
         var listItems = list.value
         if (listItems == null) {
             listItems = mutableListOf()
         }
         listItems.add(focusSession)
-        Log.i("XXX", "listItems: ${listItems}")
         list.value = listItems!!
         list.postValue(listItems!!)
     }
