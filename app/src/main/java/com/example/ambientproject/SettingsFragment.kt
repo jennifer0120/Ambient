@@ -30,19 +30,16 @@ class SettingsFragment: Fragment() {
         _binding = SettingsRecyclerMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val user = FirebaseAuth.getInstance().currentUser
-        Log.i("XXX", "user: $user");
-        binding.userName.text = "John Doe"
-
-        binding.logoutButton.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
+        Log.i("XXX", "user: $user")
+        if (user == null) {
+            binding.userName.text = ""
         }
 
-        // Create a new user with a first and last name
-        val usertest = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
+
+        binding.logoutButton.setOnClickListener {
+            binding.userName.text = ""
+            FirebaseAuth.getInstance().signOut()
+        }
 
         // Add a new document with a generated ID
 //        db.collection("users")
@@ -57,14 +54,12 @@ class SettingsFragment: Fragment() {
 //                Log.i("XXX", "completeListener: $test")
 //            }
 //        Log.i("XXX", "reaches here?!")
-        Log.i("XXX", "reaches here?")
-        val docRef = db.collection("users").document("9uIwD3d0H8N1JHmTqir3")
-        Log.i("XXX", "docRef: $docRef")
+        val docRef = db.collection("users").document("yQ99kBPBO6bJo69zPawwuNeBqcN2")
         docRef
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    Log.i("XXX", "DocumentSnapshot data: ${document.data}")
+                    binding.userName.text = "${document.getString("name")}"
                 } else {
                     Log.i("XXX", "No such document")
                 }

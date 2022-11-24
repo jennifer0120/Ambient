@@ -9,17 +9,20 @@ import java.text.FieldPosition
 class FocusSessionViewModel : ViewModel(){
     private var list = MutableLiveData<MutableList<FocusSession>>()
 
+    private var repository = SessionRepository()
+    private var repositoryList = repository.fetchData()
+
     fun getList(): LiveData<MutableList<FocusSession>> {
         return list
     }
 
     fun getItemAt(position: Int): FocusSession? {
         Log.i("XXX", "getItemAt position: $position")
-        return list.value?.get(position)
+        return repositoryList[position]
     }
 
     fun getItemCount(): Int {
-        return list.value?.size ?: 0
+        return repositoryList.size
     }
 
     fun insertFocusSession(focusSession: FocusSession) {
