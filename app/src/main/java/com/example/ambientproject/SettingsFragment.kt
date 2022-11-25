@@ -25,7 +25,6 @@ class SettingsFragment: Fragment() {
 
     private var _binding: SettingsRecyclerMainBinding? = null
     private val binding get() = _binding!!
-    private val db = Firebase.firestore
     private var user = FirebaseAuth.getInstance().currentUser
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
@@ -35,9 +34,12 @@ class SettingsFragment: Fragment() {
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
+        Log.i("XXX", "response: $response")
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
             user = FirebaseAuth.getInstance().currentUser
+            // TODO: If the user doesn't exist then create one.
+//            usersRepository.createUser(user)
             setProfile(user)
             // ...
         } else {
@@ -53,14 +55,12 @@ class SettingsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.i("XXX", "onCreateView!!!")
         _binding = SettingsRecyclerMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
         setProfile(user)
 
         binding.button.setOnClickListener {
             // if user is null, then start the sign in process
-            Log.i("XXX", "user status when on click: $user")
             user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
                 // Login
@@ -84,25 +84,12 @@ class SettingsFragment: Fragment() {
     }
 
     private fun setProfile(user: FirebaseUser?) {
-        Log.i("XXX", "setProfile for $user")
         if (user == null) {
             binding.userName.text = ""
             binding.button.text = "Log In"
         } else {
-            val docRef = db.collection("users").document(user.uid)
-            docRef
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        binding.userName.text = "${document.getString("name")}"
-                        binding.button.text = "Log Out"
-                    } else {
-                        Log.i("XXX", "No such document")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.i("XXX", "get failed with ", exception)
-                }
+            binding.userName.text = user.displayName
+            binding.button.text = "Log Out"
         }
 
     }
