@@ -137,7 +137,6 @@ class CreateFocusSessionFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        Log.i("XXX", "CreateFocusSession onDestroyView")
         // XXX Write me
         // Don't let back to home button stay when we exit favorites
         super.onDestroyView()

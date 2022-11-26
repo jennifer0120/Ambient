@@ -34,7 +34,6 @@ class SettingsFragment: Fragment() {
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
-        Log.i("XXX", "response: $response")
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
             user = FirebaseAuth.getInstance().currentUser

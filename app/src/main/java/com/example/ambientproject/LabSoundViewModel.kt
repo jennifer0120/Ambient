@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 
 // TODO: Need to update this class name later on
 class LabSoundViewModel : ViewModel(){
@@ -29,7 +30,20 @@ class LabSoundViewModel : ViewModel(){
         return false
     }
 
+    fun isTurnedOn2(key: String): Boolean {
+        if (turnedOnAmbientItemList.value != null) {
+            val turnedOnKeys = turnedOnAmbientItemList!!.value?.map { item -> item.id }
+            if (turnedOnKeys != null) {
+                return turnedOnKeys.contains(key)
+            }
+        }
+        return false
+    }
+
     private fun addTurnedOnAmbientItemLList(ambientRec: LabSound) {
+        ambientRec.mediaPlayer.prepare()
+        ambientRec.mediaPlayer.start()
+
         var turnedOnAmbientItems = turnedOnAmbientItemList.value
         if (turnedOnAmbientItems == null) {
             turnedOnAmbientItems = mutableListOf()
@@ -40,11 +54,14 @@ class LabSoundViewModel : ViewModel(){
     }
 
     private fun removeTurnedOnAmbientItemList(ambientRec: LabSound) {
+        ambientRec.mediaPlayer.stop()
+
         val turnedOnAmbientItems = turnedOnAmbientItemList.value
         turnedOnAmbientItems!!.remove(ambientRec)
         turnedOnAmbientItemList.value = turnedOnAmbientItems!!
         turnedOnAmbientItemList.postValue(turnedOnAmbientItems!!)
     }
+
 
     fun toggleTunedOn(ambientRec: LabSound) {
         if (isTurnedOn(ambientRec)) {
@@ -59,10 +76,15 @@ class LabSoundViewModel : ViewModel(){
     }
 
     fun clearOutTurnedOnAmbientItemList() {
-//        for (item in turnedOnAmbientItemList.value!!) {
-//            removeTurnedOnAmbientItemList(item)
-//        }
+        if (turnedOnAmbientItemList.value != null) {
+            for (item in turnedOnAmbientItemList.value!!) {
+                item.mediaPlayer.stop()
+            }
+        }
+
         turnedOnAmbientItemList.value = mutableListOf()
         turnedOnAmbientItemList.postValue(mutableListOf())
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.ambientproject
 
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,14 +20,18 @@ class LabSoundsFragment: Fragment() {
         val TAG: String = LabSoundsFragment::class.java.simpleName
         private const val createFocusSessionFragTag = "createFocusSessionFragTag"
         private const val sessionsFragment = "sessionsFragmentTag"
+
         fun newInstance(): LabSoundsFragment {
             return LabSoundsFragment()
         }
+        private val playerMap: HashMap<String, MediaPlayer?> = HashMap()
+
     }
 
     private var _binding: RecyclerMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel: LabSoundViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,19 +40,17 @@ class LabSoundsFragment: Fragment() {
     ): View {
         _binding = RecyclerMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewModel.clearOutTurnedOnAmbientItemList()
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = LabSoundAdapter2(viewModel)
+        val adapter = LabSoundAdapter(viewModel)
         binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
         binding.rainRecyclerView.adapter = adapter
 
         viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->
-            Log.i("XXX", "itemList: ${itemList.size}")
             if (itemList.isEmpty()) {
                 binding.createSession.setBackgroundColor(Color.parseColor("#EFEFEF"))
                 binding.createSession.setTextColor(Color.parseColor("#000000"))
@@ -71,6 +74,7 @@ class LabSoundsFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.clearOutTurnedOnAmbientItemList()
         _binding = null
     }
 }

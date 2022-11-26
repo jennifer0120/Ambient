@@ -3,17 +3,20 @@ package com.example.ambientproject
 import android.content.Context
 import android.graphics.Color
 import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ambientproject.databinding.LabSoundItemBinding
 
 class LabSoundAdapter(private val viewModel: LabSoundViewModel)
-    : RecyclerView.Adapter<LabSoundAdapter.VH>() {
-        companion object {
-            val TAG = "SoundsAdapter"
-            val playerMap: HashMap<String, MediaPlayer> = HashMap()
-        }
+    : ListAdapter<LabSound, LabSoundAdapter.VH>(LabSoundDiff()) {
+    companion object {
+        val TAG = "SoundsAdapter"
+        val playerMap: HashMap<String, MediaPlayer> = HashMap()
+    }
 
     private fun getPos(holder: RecyclerView.ViewHolder): Int {
         val pos = holder.bindingAdapterPosition
@@ -30,29 +33,29 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
     // ViewHolder pattern
     inner class VH(val labSoundItemBinding: LabSoundItemBinding)
         : RecyclerView.ViewHolder(labSoundItemBinding.root) {
-            init {
-                labSoundItemBinding.root.setOnClickListener {
-                    val position = getPos(this)
-                    val context = it.context
-                    val item = viewModel.getItemAt(position)
-                    viewModel.toggleTunedOn(item)
-                    val turnedOn = viewModel.isTurnedOn(item)
-                    item.let {
-                        setItemDisplay(turnedOn, labSoundItemBinding)
-                        playSongClip(turnedOn, item, context)
-                    }
+        init {
+            labSoundItemBinding.root.setOnClickListener {
+                val position = getPos(this)
+                val context = it.context
+                val item = viewModel.getItemAt(position)
+                viewModel.toggleTunedOn(item)
+                val turnedOn = viewModel.isTurnedOn2(item.id)
+                item.let {
+                    setItemDisplay(turnedOn, labSoundItemBinding)
+//                    playSongClip(turnedOn, item, context)
                 }
             }
         }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LabSoundAdapter.VH {
         val rowBinding = LabSoundItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
         return VH(rowBinding)
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
+    override fun onBindViewHolder(holder: LabSoundAdapter.VH, position: Int) {
         val item = viewModel.getItemAt(position)
         val binding = holder.labSoundItemBinding
         binding.itemPic.setBackgroundResource(item.image)
@@ -70,6 +73,7 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
     }
 
     fun playSongClip(turnedOn: Boolean, item: LabSound, context: Context) {
+        // TODO: Playing song clip should be moved to the fragment. Use ViewModel to manage which ones are turned on.
         if (turnedOn) {
             playerMap[item.id] = MediaPlayer()
             playerMap[item.id]!!.setDataSource(item.rawSongId)
@@ -85,5 +89,13 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
         }
     }
 
+    class LabSoundDiff : DiffUtil.ItemCallback<LabSound>() {
+        override fun areItemsTheSame(oldItem: LabSound, newItem: LabSound): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: LabSound, newItem: LabSound): Boolean {
+            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.image == newItem.image && oldItem.group == newItem.group && oldItem.rawSongId == newItem.rawSongId
+        }
+    }
 }
