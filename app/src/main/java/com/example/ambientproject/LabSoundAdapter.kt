@@ -42,7 +42,6 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
                 val turnedOn = viewModel.isTurnedOn2(item.id)
                 item.let {
                     setItemDisplay(turnedOn, labSoundItemBinding)
-//                    playSongClip(turnedOn, item, context)
                 }
             }
         }
@@ -69,23 +68,6 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
         } else {
             labSoundItemBinding.cardView.alpha = 0.5f
             labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#219ebc"))
-        }
-    }
-
-    fun playSongClip(turnedOn: Boolean, item: LabSound, context: Context) {
-        // TODO: Playing song clip should be moved to the fragment. Use ViewModel to manage which ones are turned on.
-        if (turnedOn) {
-            playerMap[item.id] = MediaPlayer()
-            playerMap[item.id]!!.setDataSource(item.rawSongId)
-            playerMap[item.id]!!.prepare()
-            playerMap[item.id]!!.start()
-        } else {
-            if (playerMap[item.id] != null) {
-                playerMap[item.id]!!.stop()
-                playerMap[item.id]!!.reset()
-                playerMap[item.id]!!.release()
-            }
-
         }
     }
 

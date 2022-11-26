@@ -43,6 +43,7 @@ class LabSoundViewModel : ViewModel(){
     private fun addTurnedOnAmbientItemLList(ambientRec: LabSound) {
         ambientRec.mediaPlayer.prepare()
         ambientRec.mediaPlayer.start()
+        ambientRec.mediaPlayer.isLooping = true
 
         var turnedOnAmbientItems = turnedOnAmbientItemList.value
         if (turnedOnAmbientItems == null) {

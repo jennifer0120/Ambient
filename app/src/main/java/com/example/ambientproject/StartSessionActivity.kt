@@ -39,6 +39,7 @@ class StartSessionActivity: AppCompatActivity() {
                     if (labSound != null) {
                         labSound.mediaPlayer.prepare()
                         labSound.mediaPlayer.start()
+                        labSound.mediaPlayer.isLooping = true
                     }
                 }
             }
