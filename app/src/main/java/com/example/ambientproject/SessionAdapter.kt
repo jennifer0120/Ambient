@@ -1,6 +1,7 @@
 package com.example.ambientproject
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
@@ -37,7 +38,11 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
                 val context = it.context
                 val item = focusSessionViewModel.getItemAt(position)
                 item.let {
+
                     val intent = Intent(context, StartSessionActivity::class.java)
+                    val bundle = Bundle()
+                    bundle.putString("sessionId", item?.id.toString())
+                    intent.putExtras(bundle)
                     context.startActivity(intent)
                 }
             }

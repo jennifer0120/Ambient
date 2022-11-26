@@ -15,7 +15,7 @@ class SessionRepository {
         val docRef = db.collection("sessions").whereEqualTo("userId", user?.uid)
         val documents = docRef.get().await()
         for (document in documents) {
-            val focusSession = FocusSession("123", document?.getString("title").toString(), document?.getString("description").toString(), listOf())
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), listOf())
             dataList.add(focusSession)
         }
         return dataList
@@ -34,5 +34,14 @@ class SessionRepository {
         sessionsRef.add(data)
     }
 
-
+    suspend fun getSessionData(sessionId: String): FocusSession {
+        val sessionRef = db.collection("sessions").document(sessionId)
+        val document = sessionRef.get().await()
+        return FocusSession(
+            sessionId,
+            document?.getString("title").toString(),
+            document?.getString("description").toString(),
+            listOf()
+        )
+    }
 }

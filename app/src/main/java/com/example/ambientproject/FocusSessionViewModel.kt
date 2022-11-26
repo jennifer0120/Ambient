@@ -47,4 +47,8 @@ class FocusSessionViewModel : ViewModel(){
         list.value = listItems!!
         list.postValue(listItems!!)
     }
+
+    suspend fun getSessionData(sessionId: String): FocusSession {
+        return repository.getSessionData(sessionId)
+    }
 }
