@@ -1,13 +1,14 @@
 package com.example.ambientproject
 
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ambientproject.databinding.RoomItemBinding
 import com.example.ambientproject.databinding.SessionItemBinding
+
 
 class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
     : ListAdapter<FocusSession, SessionAdapter.VH>(SessionDiff()) {
@@ -36,6 +37,8 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
                 val context = it.context
                 val item = focusSessionViewModel.getItemAt(position)
                 item.let {
+                    val intent = Intent(context, StartSessionActivity::class.java)
+                    context.startActivity(intent)
                 }
             }
         }

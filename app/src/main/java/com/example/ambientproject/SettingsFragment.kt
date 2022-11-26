@@ -83,6 +83,7 @@ class SettingsFragment: Fragment() {
     }
 
     private fun setProfile(user: FirebaseUser?) {
+        Log.i("XXX", "user: $user")
         if (user == null) {
             binding.userName.text = ""
             binding.button.text = "Log In"

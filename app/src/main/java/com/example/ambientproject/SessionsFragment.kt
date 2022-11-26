@@ -58,7 +58,6 @@ class SessionsFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
-
     }
 
     override fun onDestroyView() {
