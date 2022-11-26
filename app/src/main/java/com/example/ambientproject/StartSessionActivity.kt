@@ -1,5 +1,6 @@
 package com.example.ambientproject
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -14,6 +15,8 @@ import kotlinx.coroutines.launch
 class StartSessionActivity: AppCompatActivity() {
     private lateinit var binding: StartSessionActivityBinding
     private val focusSessionModel: FocusSessionViewModel by viewModels()
+    private val labSoundViewModel: LabSoundViewModel by viewModels()
+    private var labSoundIds: List<String> = listOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,8 +32,24 @@ class StartSessionActivity: AppCompatActivity() {
             uiScope.launch {
                 val sessionData = focusSessionModel.getSessionData(sessionId)
                 binding.sessionTitle.text = sessionData.title
+
+                labSoundIds = sessionData.labSoundIds
+                for (labSoundId in sessionData.labSoundIds) {
+                    val labSound = labSoundViewModel.getLabSound(labSoundId)
+                    if (labSound != null) {
+                        labSound.mediaPlayer.prepare()
+                        labSound.mediaPlayer.start()
+                    }
+                }
             }
         }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        for (labSoundId in labSoundIds) {
+            val labSound = labSoundViewModel.getLabSound(labSoundId)
+            labSound?.mediaPlayer?.stop()
+        }
     }
 }

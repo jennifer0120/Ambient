@@ -15,7 +15,9 @@ class SessionRepository {
         val docRef = db.collection("sessions").whereEqualTo("userId", user?.uid)
         val documents = docRef.get().await()
         for (document in documents) {
-            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), listOf())
+            Log.i("XXX", "document: $document")
+            Log.i("XXX", "document.labSoundIds: ${document?.get("labSoundIds")}")
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>)
             dataList.add(focusSession)
         }
         return dataList
@@ -41,7 +43,7 @@ class SessionRepository {
             sessionId,
             document?.getString("title").toString(),
             document?.getString("description").toString(),
-            listOf()
+            document?.get("labSoundIds") as List<String>,
         )
     }
 }

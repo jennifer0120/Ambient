@@ -19,11 +19,16 @@ class LabSoundRepository {
             LabSound("rain_interior_4", "River 4 Test", R.drawable.jennifer_leaf, "https://firebasestorage.googleapis.com/v0/b/ambient-20983.appspot.com/o/Front%20Row%20SFX%20by%20Pole%20Position%20-%20Weather%20Front%20-%20Distant%20Thunder%2C%20Summer%20Evening%2C%20Rumbling.aac?alt=media&token=23cd00f8-7df4-46c5-abb7-cc5d72155fc3", "river_series", MediaPlayer()),
             LabSound("rain_interior_5", "River 5 Test", R.drawable.jennifer_rain, "https://firebasestorage.googleapis.com/v0/b/ambient-20983.appspot.com/o/Front%20Row%20SFX%20by%20Pole%20Position%20-%20Weather%20Front%20-%20Distant%20Thunder%2C%20Summer%20Evening%2C%20Rumbling.aac?alt=media&token=23cd00f8-7df4-46c5-abb7-cc5d72155fc3", "river_series", MediaPlayer()),
         )
+        private var count = 0
     }
 
     fun fetchData(): List<LabSound> {
-        for (item in initialDataList) {
-            item.mediaPlayer.setDataSource(item.rawSongId)
+        // Weird logic to make sure setDataSource is only called once
+        if (count == 0) {
+            for (item in initialDataList) {
+                item.mediaPlayer.setDataSource(item.rawSongId)
+            }
+            count += 1
         }
         return initialDataList
     }

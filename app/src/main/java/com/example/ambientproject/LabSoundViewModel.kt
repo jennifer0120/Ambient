@@ -86,5 +86,12 @@ class LabSoundViewModel : ViewModel(){
         turnedOnAmbientItemList.postValue(mutableListOf())
     }
 
-
+    fun getLabSound(labSoundId: String): LabSound? {
+        for (item in list) {
+            if (item.id == labSoundId) {
+                return item
+            }
+        }
+        return null
+    }
 }
