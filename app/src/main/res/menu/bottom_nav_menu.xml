@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_group_session"
-        android:icon="@drawable/ic_baseline_center_focus_strong_24"
+        android:icon="@drawable/ic_baseline_group_work_24"
         android:title="@string/group_sessions" />
 
     <item

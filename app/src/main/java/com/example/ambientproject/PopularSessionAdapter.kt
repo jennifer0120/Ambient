@@ -69,6 +69,7 @@ class PopularSessionAdapter(private val focusSessionViewModel: FocusSessionViewM
             if (binding.itemDescription.text.isNotEmpty()) {
                 binding.itemDescription.text = item.description
             }
+            binding.itemViewCount.text = item.viewCount.toString()
         }
     }
 
