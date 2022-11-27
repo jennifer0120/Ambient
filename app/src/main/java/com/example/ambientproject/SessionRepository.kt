@@ -3,6 +3,7 @@ package com.example.ambientproject
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -19,6 +20,19 @@ class SessionRepository {
             val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long)
             dataList.add(focusSession)
         }
+        return dataList
+    }
+
+    suspend fun getTopPopularList(number: Long): List<FocusSession> {
+        val dataList = mutableListOf<FocusSession>()
+        val docRef = db.collection("sessions").orderBy("viewCount", Query.Direction.DESCENDING).limit(number)
+        val documents = docRef.get().await()
+        Log.i("XXX", "documents: $documents")
+        for (document in documents) {
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long)
+            dataList.add(focusSession)
+        }
+        Log.i("XXX", "dataList: $dataList")
         return dataList
     }
 

@@ -11,6 +11,7 @@ import java.text.FieldPosition
 
 class FocusSessionViewModel : ViewModel(){
     private var list = MutableLiveData<MutableList<FocusSession>>()
+    private var popularList = MutableLiveData<MutableList<FocusSession>>()
 
     private var repository = SessionRepository()
 //    private var repositoryList = repository.fetchData()
@@ -20,6 +21,20 @@ class FocusSessionViewModel : ViewModel(){
         list.value = dataList.toMutableList()
 
         return list
+    }
+
+    suspend fun getTopPopularList(number: Long): LiveData<MutableList<FocusSession>> {
+        val dataList = repository.getTopPopularList(number)
+        popularList.value = dataList.toMutableList()
+        return popularList
+    }
+
+    fun getTopPopularListItemCount(): Int {
+        return popularList.value?.size ?: 0
+    }
+
+    fun getTopPopularListItemAt(position: Int): FocusSession? {
+        return popularList.value?.get(position)
     }
 
     fun getItemAt(position: Int): FocusSession? {
@@ -55,4 +70,5 @@ class FocusSessionViewModel : ViewModel(){
     suspend fun getSessionData(sessionId: String): FocusSession {
         return repository.getSessionData(sessionId)
     }
+
 }

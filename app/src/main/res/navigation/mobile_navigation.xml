@@ -7,6 +7,11 @@
     >
 
     <fragment
+        android:id="@+id/navigation_group_session"
+        android:name="com.example.ambientproject.GroupSessionsFragment"
+        tools:layout="@layout/session_recycler_main"
+        />
+    <fragment
         android:id="@+id/navigation_session"
         android:name="com.example.ambientproject.SessionsFragment"
         tools:layout="@layout/session_recycler_main"

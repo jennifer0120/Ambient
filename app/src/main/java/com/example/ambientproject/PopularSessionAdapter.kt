@@ -16,11 +16,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
-class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
-    : ListAdapter<FocusSession, SessionAdapter.VH>(SessionDiff()) {
-        companion object {
-            val TAG = "SessionAdapter"
-        }
+class PopularSessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
+    : ListAdapter<FocusSession, PopularSessionAdapter.VH>(SessionDiff()) {
+    companion object {
+        val TAG = "SessionAdapter"
+    }
 
     private fun getPos(holder: RecyclerView.ViewHolder): Int {
         val pos = holder.bindingAdapterPosition
@@ -31,7 +31,7 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
     }
 
     override fun getItemCount(): Int {
-        return focusSessionViewModel.getItemCount()
+        return focusSessionViewModel.getTopPopularListItemCount()
     }
 
     // ViewHolder patterns
@@ -41,7 +41,7 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
             sessionItemBinding.root.setOnClickListener {
                 val position = getPos(this)
                 val context = it.context
-                val item = focusSessionViewModel.getItemAt(position)
+                val item = focusSessionViewModel.getTopPopularListItemAt(position)
                 item.let {
 
                     val intent = Intent(context, StartSessionActivity::class.java)
@@ -54,15 +54,15 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionAdapter.VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularSessionAdapter.VH {
         val sessionItemBinding = SessionItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
         return VH(sessionItemBinding)
     }
 
-    override fun onBindViewHolder(holder: SessionAdapter.VH, position: Int) {
-        val item = focusSessionViewModel.getItemAt(position)
+    override fun onBindViewHolder(holder: PopularSessionAdapter.VH, position: Int) {
+        val item = focusSessionViewModel.getTopPopularListItemAt(position)
         val binding = holder.sessionItemBinding
         if (item != null) {
             binding.itemTitle.text = item.title
