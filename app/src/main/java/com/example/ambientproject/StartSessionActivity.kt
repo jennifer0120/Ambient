@@ -43,8 +43,8 @@ class StartSessionActivity: AppCompatActivity() {
             uiScope.launch {
                 val sessionData = focusSessionModel.getSessionData(sessionId)
                 binding.sessionTitle.text = sessionData.title
-
-                labSoundIds = sessionData.labSoundIds
+                binding.viewCount.text = sessionData.viewCount.toString()
+                    labSoundIds = sessionData.labSoundIds
                 for (labSoundId in sessionData.labSoundIds) {
                     val labSound = labSoundViewModel.getLabSound(labSoundId)
                     if (labSound != null) {
@@ -56,10 +56,10 @@ class StartSessionActivity: AppCompatActivity() {
             }
         }
 
-        binding.startEndSessionButton.isClickable = false
+
         // TODO: Temp for dev testing
-        binding.twentySecondOptionButton.setOnClickListener {
-            sessionTimeInMs = 20 * 1000
+        binding.fiveSecondOptionButton.setOnClickListener {
+            sessionTimeInMs = 5 * 1000
             binding.timerText.text = convertMsToTimeDisplay(sessionTimeInMs)
             sessionTimeSelected = true
         }

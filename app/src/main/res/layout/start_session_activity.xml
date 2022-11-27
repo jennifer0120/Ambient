@@ -14,10 +14,27 @@
         android:layout_margin="30dp"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:text="Session Title"
+        android:text="Preparing Session..."
         >
     </TextView>
 
+    <TextView
+        android:id="@+id/viewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sessionTitle"
+        />
+    <TextView
+        android:id="@+id/viewCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="people completed the session"
+        app:layout_constraintTop_toBottomOf="@+id/viewCount"
+        />
     <TextView
         android:id="@+id/timerText"
         android:layout_width="wrap_content"
@@ -34,8 +51,8 @@
     </TextView>
 
     <Button
-        android:id="@+id/twentySecondOptionButton"
-        android:text="20 seconds"
+        android:id="@+id/fiveSecondOptionButton"
+        android:text="5 seconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +70,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/twentySecondOptionButton"
+        app:layout_constraintTop_toBottomOf="@+id/fiveSecondOptionButton"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/white"
