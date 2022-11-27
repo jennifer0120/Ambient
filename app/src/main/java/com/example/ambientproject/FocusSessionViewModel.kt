@@ -41,6 +41,10 @@ class FocusSessionViewModel : ViewModel(){
         list.postValue(listItems!!)
     }
 
+    fun incrementViewCount(sessionId: String) {
+        repository.incrementViewCount(sessionId)
+    }
+
     fun removeFocusSession(focusSession: FocusSession) {
         val listItems = list.value
         listItems!!.remove(focusSession)

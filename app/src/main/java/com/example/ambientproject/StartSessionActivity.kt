@@ -17,6 +17,7 @@ import com.example.ambientproject.databinding.StartSessionActivityBinding
 import kotlinx.coroutines.*
 import kotlin.concurrent.timer
 import kotlin.math.floor
+import kotlin.math.min
 
 
 class StartSessionActivity: AppCompatActivity() {
@@ -96,9 +97,9 @@ class StartSessionActivity: AppCompatActivity() {
                         vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE))
                         binding.startEndSessionButton.text = "Start Session"
                         startSession = false
+                        focusSessionModel.incrementViewCount(sessionId!!)
                     }
                 }
-                Log.i("XXX", "timer initialized: $timer")
                 if (!startSession) {
                     startSession = true
                     binding.startEndSessionButton.text = "End Session"
@@ -106,12 +107,8 @@ class StartSessionActivity: AppCompatActivity() {
                 } else {
                     val toast = Toast.makeText(applicationContext, "Uh-oh, you've ended the session before completing.", Toast.LENGTH_LONG)
                     toast.show()
-                    binding.startEndSessionButton.text = "Start Session"
-                    startSession = false
-                    sessionTimeSelected = false
-                    Log.i("XXX", "timer canceled: ")
                     timer.cancel()
-                    binding.timerText.text = convertMsToTimeDisplay(0)
+                    finish()
                 }
             } else {
                 val toast = Toast.makeText(applicationContext, "Please select a time frame", Toast.LENGTH_SHORT)
@@ -120,35 +117,18 @@ class StartSessionActivity: AppCompatActivity() {
         }
     }
 
+    private fun getTwoDigitsDisplay(number: Long): String {
+        if (number < 10) {
+            return "0$number"
+        }
+        return number.toString()
+    }
+
     private fun convertMsToTimeDisplay(ms: Long): String {
-//        val seconds = floor(ms / 1000.0).toInt()
-//        var displaySeconds = seconds
-//        if (seconds < 10) {
-//            displaySeconds = "0$seconds"
-//        } else {
-//            displaySeconds =
-//        }
-//
-//        val minutes = floor(seconds / 60.0).toInt()
-//        var displayMinutes = minutes.toString()
-//        if (minutes < 10) {
-//            displayMinutes = "0$minutes"
-//        }
-//        val hours = floor(minutes / 60.0).toInt()
         val seconds = ms / 1000 % 60
         val minutes = ms / 1000 / 60 % 60
         val hours = ms / 1000 / 60 / 60
-
-        var displaySeconds = seconds.toString()
-        if (seconds < 10) {
-            displaySeconds = "0$displaySeconds"
-        }
-
-        var displayMinutes = minutes.toString()
-        if (minutes < 10) {
-            displayMinutes = "0$displayMinutes"
-        }
-        return "$hours:$displayMinutes:$displaySeconds"
+        return "${getTwoDigitsDisplay(hours)}:${getTwoDigitsDisplay(minutes)}:${getTwoDigitsDisplay(seconds)}"
     }
 
     private fun stopAllMediaPlayers() {

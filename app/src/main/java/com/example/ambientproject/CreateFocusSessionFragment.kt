@@ -98,7 +98,7 @@ class CreateFocusSessionFragment : Fragment() {
                             Random.nextInt(0, 10000).toString(),
                             binding.sessionTitleEditText.text.toString(),
                             binding.sessionDescriptionEditText.text.toString(),
-                            selectedList.map { item -> item.id })
+                            selectedList.map { item -> item.id }, 0)
                         focusSessionModel.insertFocusSession(focusSession)
                         activity?.supportFragmentManager?.findFragmentByTag(
                             createFocusSessionFragTag

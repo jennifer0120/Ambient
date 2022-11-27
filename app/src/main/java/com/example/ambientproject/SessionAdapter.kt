@@ -64,6 +64,7 @@ class SessionAdapter(private val focusSessionViewModel: FocusSessionViewModel)
             if (binding.itemDescription.text.isNotEmpty()) {
                 binding.itemDescription.text = item.description
             }
+            binding.itemViewCount.text = item.viewCount.toString()
         }
     }
 
