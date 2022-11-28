@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.loader.content.AsyncTaskLoader
 import coil.load
 import com.example.ambientproject.databinding.SettingsRecyclerMainBinding
@@ -19,6 +20,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,11 +36,20 @@ class SettingsFragment: Fragment() {
 
     private var _binding: SettingsRecyclerMainBinding? = null
     private val binding get() = _binding!!
+    private val userViewModel: UserViewModel by activityViewModels()
     private var user = FirebaseAuth.getInstance().currentUser
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) {
         result -> onSignInResult(result)
+    }
+
+    private fun getProfileUrl(user: FirebaseUser): String {
+        val displayName = user.displayName
+        if (displayName != null) {
+            return "https://robohash.org/$displayName.png?set=set4"
+        }
+        return "https://robohash.org/${user.uid}.png?set=set4"
     }
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
@@ -47,8 +58,9 @@ class SettingsFragment: Fragment() {
             // Successfully signed in
             user = FirebaseAuth.getInstance().currentUser
             // TODO: If the user doesn't exist then create one.
-//            usersRepository.createUser(user)
-            setProfile(user)
+            val userData = User(user!!.uid, user!!.displayName, getProfileUrl(user!!))
+            userViewModel.insertUser(userData)
+            setProfile(userData)
             // ...
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -65,7 +77,16 @@ class SettingsFragment: Fragment() {
     ): View {
         _binding = SettingsRecyclerMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        setProfile(user)
+
+        user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val job = Job()
+            val uiScope = CoroutineScope(Dispatchers.Main + job)
+            uiScope.launch {
+                val userData = userViewModel.getUser(user!!.uid)
+                setProfile(userData)
+            }
+        }
 
         binding.button.setOnClickListener {
             // if user is null, then start the sign in process
@@ -87,18 +108,19 @@ class SettingsFragment: Fragment() {
             }
         }
 
-        binding.profilePic.load("https://robohash.org/random-example2.png/")
-
         return root
     }
 
-    private fun setProfile(user: FirebaseUser?) {
+    private fun setProfile(user: User?) {
         if (user == null) {
             binding.userName.text = ""
             binding.button.text = "Log In"
+            binding.profilePic.visibility = View.INVISIBLE
         } else {
             binding.userName.text = user.displayName
             binding.button.text = "Log Out"
+            binding.profilePic.visibility = View.VISIBLE
+            binding.profilePic.load(user.profileUrl)
         }
 
     }
