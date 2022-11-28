@@ -52,11 +52,12 @@ class LabSoundsFragment: Fragment() {
         viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->
             if (itemList.isEmpty()) {
-                binding.createSession.setBackgroundColor(Color.parseColor("#EFEFEF"))
-                binding.createSession.setTextColor(Color.parseColor("#000000"))
+                binding.createSession.setBackgroundColor(Color.parseColor("#a9def9"))
+                binding.createSession.setTextColor(Color.parseColor("#AA1363DF"))
+
             } else {
-                binding.createSession.setBackgroundColor(Color.parseColor("#FF0000"))
-                binding.createSession.setTextColor(Color.parseColor("#FFFFFF"))
+                binding.createSession.setBackgroundColor(Color.parseColor("#fcf6bd"))
+                binding.createSession.setTextColor(Color.parseColor("#fca311"))
             }
 
             binding.createSession.setOnClickListener {

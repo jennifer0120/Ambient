@@ -63,11 +63,13 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
 
     fun setItemDisplay(turnedOn: Boolean, labSoundItemBinding: LabSoundItemBinding) {
         if (turnedOn) {
-            labSoundItemBinding.cardView.alpha = 1.0f
-            labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#023047"))
+//            labSoundItemBinding.cardView.alpha = 1.0f
+            labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#fcf6bd"))
+            labSoundItemBinding.itemText.setTextColor(Color.parseColor("#fca311"))
         } else {
-            labSoundItemBinding.cardView.alpha = 0.5f
-            labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#219ebc"))
+//            labSoundItemBinding.cardView.alpha = 0.5f
+            labSoundItemBinding.cardView.setCardBackgroundColor(Color.parseColor("#a9def9"))
+            labSoundItemBinding.itemText.setTextColor(Color.parseColor("#ffffff"))
         }
     }
 

@@ -13,7 +13,7 @@
             app:cardCornerRadius="5dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="#80219ebc"
+            app:cardBackgroundColor="#a9def9"
             android:id="@+id/cardView"
             >
 
@@ -27,7 +27,6 @@
                     android:id="@+id/itemPic"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:alpha="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:padding="10dp"
