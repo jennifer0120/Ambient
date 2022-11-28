@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -54,7 +55,6 @@ class LabSoundsFragment: Fragment() {
             if (itemList.isEmpty()) {
                 binding.createSession.setBackgroundColor(Color.parseColor("#a9def9"))
                 binding.createSession.setTextColor(Color.parseColor("#AA1363DF"))
-
             } else {
                 binding.createSession.setBackgroundColor(Color.parseColor("#fcf6bd"))
                 binding.createSession.setTextColor(Color.parseColor("#fca311"))
