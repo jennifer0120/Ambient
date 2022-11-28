@@ -60,4 +60,6 @@ dependencies {
 
     // Import the FirebaseUI
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+
+    implementation("io.coil-kt:coil:2.2.2")
 }

@@ -8,34 +8,28 @@
     android:padding="20dp"
     >
 
-    <TextView
-        android:id="@+id/sessionTitleTextView"
-        android:text="Session Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
     <EditText
         android:id="@+id/sessionTitleEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Session Title"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
         />
 
-    <TextView
-        android:id="@+id/sessionDescriptionTextView"
-        android:text="Description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
     <EditText
         android:id="@+id/sessionDescriptionEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Session Description"
+        android:padding="10dp"
         />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/swipeRefreshLayout"
+        android:padding="10dp"
         >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

@@ -1,22 +1,31 @@
 package com.example.ambientproject
 
 import android.app.Activity.RESULT_OK
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ambientproject.databinding.RecyclerMainBinding
+import androidx.loader.content.AsyncTaskLoader
+import coil.load
 import com.example.ambientproject.databinding.SettingsRecyclerMainBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import java.io.InputStream
+import java.net.URL
+
 
 class SettingsFragment: Fragment() {
     companion object {
@@ -78,12 +87,12 @@ class SettingsFragment: Fragment() {
             }
         }
 
+        binding.profilePic.load("https://robohash.org/random-example2.png/")
 
         return root
     }
 
     private fun setProfile(user: FirebaseUser?) {
-        Log.i("XXX", "user: $user")
         if (user == null) {
             binding.userName.text = ""
             binding.button.text = "Log In"
