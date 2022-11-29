@@ -38,6 +38,19 @@
             />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/generateRandomPicture"
+        android:text="Generate Session Banner"
+        android:layout_margin="20dp"
+        />
+    <ImageView
+        android:id="@+id/sessionImageView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        />
+    <Button
         android:id="@+id/createFocusSessionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

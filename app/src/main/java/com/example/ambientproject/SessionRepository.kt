@@ -8,7 +8,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-data class FocusSession(val id: String, val title: String, val description: String, val labSoundIds: List<String>, val viewCount: Long, val creatorProfileUrl: String)
+data class FocusSession(val id: String, val title: String, val description: String, val labSoundIds: List<String>, val viewCount: Long, val creatorProfileUrl: String, val sessionBannerUrl: String)
 class SessionRepository {
     private val db = Firebase.firestore
     suspend fun fetchData(): List<FocusSession> {
@@ -17,7 +17,7 @@ class SessionRepository {
         val docRef = db.collection("sessions").whereEqualTo("userId", user?.uid)
         val documents = docRef.get().await()
         for (document in documents) {
-            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long, document?.getString("creatorProfileUrl").toString())
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long, document?.getString("creatorProfileUrl").toString(), document?.getString("sessionBannerUrl").toString())
             dataList.add(focusSession)
         }
         return dataList
@@ -28,7 +28,7 @@ class SessionRepository {
         val docRef = db.collection("sessions").orderBy("viewCount", Query.Direction.DESCENDING).limit(number)
         val documents = docRef.get().await()
         for (document in documents) {
-            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long, document?.getString("creatorProfileUrl").toString())
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long, document?.getString("creatorProfileUrl").toString(), document?.getString("sessionBannerUrl").toString())
             dataList.add(focusSession)
         }
         return dataList
@@ -43,6 +43,7 @@ class SessionRepository {
             "userId" to user?.uid,
             "viewCount" to focusSession.viewCount,
             "creatorProfileUrl" to focusSession.creatorProfileUrl,
+            "sessionBannerUrl" to focusSession.sessionBannerUrl,
         )
 
         val sessionsRef = db.collection("sessions")
@@ -64,6 +65,7 @@ class SessionRepository {
             document?.get("labSoundIds") as List<String>,
             document?.get("viewCount") as Long,
             document?.getString("creatorProfileUrl").toString(),
+            document?.getString("sessionBannerUrl").toString(),
         )
     }
 }

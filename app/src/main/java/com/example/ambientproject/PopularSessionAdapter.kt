@@ -72,6 +72,7 @@ class PopularSessionAdapter(private val focusSessionViewModel: FocusSessionViewM
             }
             binding.itemViewCount.text = item.viewCount.toString()
             binding.profilePic.load(item.creatorProfileUrl)
+            binding.sessionBanner.load(item.sessionBannerUrl)
         }
     }
 

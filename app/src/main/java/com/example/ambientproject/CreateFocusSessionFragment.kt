@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.ambientproject.databinding.CreateFocusSessionFragmentBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -92,6 +93,16 @@ class CreateFocusSessionFragment : Fragment() {
             userProfileUrl = userData!!.profileUrl
         }
 
+        var sessionBannerUrl = ""
+        val randomSeed = user?.uid ?: (0..100000).random()
+        sessionBannerUrl = "https://picsum.photos/seed/${randomSeed}/400/50"
+        binding.sessionImageView.load(sessionBannerUrl)
+        binding.generateRandomPicture.setOnClickListener {
+            val randomNumber = (0..100).random()
+            sessionBannerUrl = "https://picsum.photos/seed/${randomSeed}${randomNumber}/400/50"
+            binding.sessionImageView.load(sessionBannerUrl)
+        }
+
         binding.createFocusSessionButton.setOnClickListener {
             if (user == null) {
                 // Choose authentication providers
@@ -114,7 +125,7 @@ class CreateFocusSessionFragment : Fragment() {
                             Random.nextInt(0, 10000).toString(),
                             binding.sessionTitleEditText.text.toString(),
                             binding.sessionDescriptionEditText.text.toString(),
-                            selectedList.map { item -> item.id }, 0, userProfileUrl)
+                            selectedList.map { item -> item.id }, 0, userProfileUrl, sessionBannerUrl)
                         focusSessionModel.insertFocusSession(focusSession)
                         activity?.supportFragmentManager?.findFragmentByTag(
                             createFocusSessionFragTag
@@ -128,6 +139,8 @@ class CreateFocusSessionFragment : Fragment() {
                     }
             }
         }
+
+
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
