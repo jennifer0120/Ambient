@@ -44,7 +44,7 @@ class CreateFocusSessionRowAdapter(private val viewModel: LabSoundViewModel)
             return oldItem.id == newItem.id
         }
         override fun areContentsTheSame(oldItem: LabSound, newItem: LabSound): Boolean {
-            return oldItem.id == newItem.id && oldItem.group == newItem.group && oldItem.name == newItem.name && oldItem.image == newItem.image && oldItem.rawSongId == newItem.rawSongId
+            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.image == newItem.image && oldItem.rawSongId == newItem.rawSongId
         }
     }
 }

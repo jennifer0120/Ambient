@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.ambientproject.databinding.SessionItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,6 +71,7 @@ class PopularSessionAdapter(private val focusSessionViewModel: FocusSessionViewM
                 binding.itemDescription.text = item.description
             }
             binding.itemViewCount.text = item.viewCount.toString()
+            binding.profilePic.load(item.creatorProfileUrl)
         }
     }
 

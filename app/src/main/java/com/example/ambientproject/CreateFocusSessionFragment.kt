@@ -17,6 +17,10 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import edu.cs371m.reddit.ui.CreateFocusSessionRowAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class CreateFocusSessionFragment : Fragment() {
@@ -38,6 +42,8 @@ class CreateFocusSessionFragment : Fragment() {
     private val binding get() = _binding!!
     private val labSoundViewModel: LabSoundViewModel by activityViewModels()
     private val focusSessionModel: FocusSessionViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) {
@@ -77,6 +83,15 @@ class CreateFocusSessionFragment : Fragment() {
             binding.createFocusSessionButton.text = "Create Focus Session"
         }
 
+        val job = Job()
+        val uiScope = CoroutineScope(Dispatchers.Main + job)
+
+        var userProfileUrl = ""
+        uiScope.launch {
+            val userData = userViewModel.getUser(user!!.uid)
+            userProfileUrl = userData!!.profileUrl
+        }
+
         binding.createFocusSessionButton.setOnClickListener {
             if (user == null) {
                 // Choose authentication providers
@@ -94,11 +109,12 @@ class CreateFocusSessionFragment : Fragment() {
             if (binding.sessionTitleEditText.text.toString().isNotEmpty()) {
                 labSoundViewModel.getTurnedOnAmbientItemList()
                     .observe(viewLifecycleOwner) { selectedList ->
+
                         val focusSession = FocusSession(
                             Random.nextInt(0, 10000).toString(),
                             binding.sessionTitleEditText.text.toString(),
                             binding.sessionDescriptionEditText.text.toString(),
-                            selectedList.map { item -> item.id }, 0)
+                            selectedList.map { item -> item.id }, 0, userProfileUrl)
                         focusSessionModel.insertFocusSession(focusSession)
                         activity?.supportFragmentManager?.findFragmentByTag(
                             createFocusSessionFragTag
@@ -108,7 +124,6 @@ class CreateFocusSessionFragment : Fragment() {
                                     ?.remove(it1)
                                     ?.commit()
                             }
-//                        labSoundViewModel.clearOutTurnedOnAmbientItemList()
                         findNavController().navigate(R.id.navigation_session)
                     }
             }

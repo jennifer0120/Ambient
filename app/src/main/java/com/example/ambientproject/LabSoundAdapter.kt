@@ -77,7 +77,7 @@ class LabSoundAdapter(private val viewModel: LabSoundViewModel)
         }
 
         override fun areContentsTheSame(oldItem: LabSound, newItem: LabSound): Boolean {
-            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.image == newItem.image && oldItem.group == newItem.group && oldItem.rawSongId == newItem.rawSongId
+            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.image == newItem.image && oldItem.rawSongId == newItem.rawSongId
         }
     }
 }

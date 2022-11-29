@@ -8,7 +8,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-data class FocusSession(val id: String, val title: String, val description: String, val labSoundIds: List<String>, val viewCount: Long)
+data class FocusSession(val id: String, val title: String, val description: String, val labSoundIds: List<String>, val viewCount: Long, val creatorProfileUrl: String)
 class SessionRepository {
     private val db = Firebase.firestore
     suspend fun fetchData(): List<FocusSession> {
@@ -17,7 +17,7 @@ class SessionRepository {
         val docRef = db.collection("sessions").whereEqualTo("userId", user?.uid)
         val documents = docRef.get().await()
         for (document in documents) {
-            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long)
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long, document?.getString("creatorProfileUrl").toString())
             dataList.add(focusSession)
         }
         return dataList
@@ -27,12 +27,10 @@ class SessionRepository {
         val dataList = mutableListOf<FocusSession>()
         val docRef = db.collection("sessions").orderBy("viewCount", Query.Direction.DESCENDING).limit(number)
         val documents = docRef.get().await()
-        Log.i("XXX", "documents: $documents")
         for (document in documents) {
-            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long)
+            val focusSession = FocusSession(document?.id!!, document?.getString("title").toString(), document?.getString("description").toString(), document?.get("labSoundIds") as List<String>, document?.get("viewCount") as Long, document?.getString("creatorProfileUrl").toString())
             dataList.add(focusSession)
         }
-        Log.i("XXX", "dataList: $dataList")
         return dataList
     }
 
@@ -44,6 +42,7 @@ class SessionRepository {
             "labSoundIds" to focusSession.labSoundIds,
             "userId" to user?.uid,
             "viewCount" to focusSession.viewCount,
+            "creatorProfileUrl" to focusSession.creatorProfileUrl,
         )
 
         val sessionsRef = db.collection("sessions")
@@ -64,6 +63,7 @@ class SessionRepository {
             document?.getString("description").toString(),
             document?.get("labSoundIds") as List<String>,
             document?.get("viewCount") as Long,
+            document?.getString("creatorProfileUrl").toString(),
         )
     }
 }
