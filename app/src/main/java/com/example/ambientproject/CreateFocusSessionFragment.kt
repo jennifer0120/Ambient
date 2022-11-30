@@ -95,11 +95,11 @@ class CreateFocusSessionFragment : Fragment() {
 
         var sessionBannerUrl = ""
         val randomSeed = user?.uid ?: (0..100000).random()
-        sessionBannerUrl = "https://picsum.photos/seed/${randomSeed}/400/50"
+        sessionBannerUrl = "https://picsum.photos/seed/${randomSeed}/400/75"
         binding.sessionImageView.load(sessionBannerUrl)
         binding.generateRandomPicture.setOnClickListener {
             val randomNumber = (0..100).random()
-            sessionBannerUrl = "https://picsum.photos/seed/${randomSeed}${randomNumber}/400/50"
+            sessionBannerUrl = "https://picsum.photos/seed/${randomSeed}${randomNumber}/400/75"
             binding.sessionImageView.load(sessionBannerUrl)
         }
 
