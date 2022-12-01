@@ -14,6 +14,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ambientproject.databinding.RecyclerMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 
 
 class LabSoundsFragment: Fragment() {
@@ -33,7 +36,6 @@ class LabSoundsFragment: Fragment() {
     private val binding get() = _binding!!
     private val viewModel: LabSoundViewModel by activityViewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +52,10 @@ class LabSoundsFragment: Fragment() {
         binding.rainRecyclerView.layoutManager = GridLayoutManager(binding.rainRecyclerView.context, 2)
         binding.rainRecyclerView.adapter = adapter
 
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            binding.createSession.text = "Log in first before creating a s session"
+        }
         viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->
             if (itemList.isEmpty()) {
@@ -61,7 +67,7 @@ class LabSoundsFragment: Fragment() {
             }
 
             binding.createSession.setOnClickListener {
-                if (itemList.isNotEmpty()) {
+                if (itemList.isNotEmpty() && user != null) {
                     // Instead of creating an activity here, create a fragment instead because the viewModel is tied to the activity lifecycle
                     requireActivity().supportFragmentManager.commit {
                         replace(R.id.nav_host_fragment_activity_main, CreateFocusSessionFragment.newInstance(), createFocusSessionFragTag)

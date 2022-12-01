@@ -78,11 +78,11 @@ class CreateFocusSessionFragment : Fragment() {
 
         // Check sign in
         val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
-            binding.createFocusSessionButton.text = "Log in to Create Focus Session"
-        } else {
-            binding.createFocusSessionButton.text = "Create Focus Session"
-        }
+//        if (user == null) {
+//            binding.createFocusSessionButton.text = "Log in to Create Focus Session"
+//        } else {
+//            binding.createFocusSessionButton.text = "Create Focus Session"
+//        }
 
         val job = Job()
         val uiScope = CoroutineScope(Dispatchers.Main + job)

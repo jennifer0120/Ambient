@@ -39,7 +39,7 @@ class GroupSessionsFragment : Fragment() {
         val uiScope = CoroutineScope(Dispatchers.Main + job)
 
         uiScope.launch {
-            focusSessionModel.getTopPopularList(5).observe(viewLifecycleOwner) {
+            focusSessionModel.getTopPopularList(10).observe(viewLifecycleOwner) {
                     list ->
                 adapter.submitList(list)
                 adapter.notifyDataSetChanged()
