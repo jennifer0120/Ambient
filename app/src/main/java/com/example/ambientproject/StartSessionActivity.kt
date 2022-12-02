@@ -92,12 +92,15 @@ class StartSessionActivity: AppCompatActivity() {
                     @RequiresApi(Build.VERSION_CODES.S)
                     override fun onFinish() {
                         stopAllMediaPlayers()
-                        val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                        val vibrator = vibratorManager.defaultVibrator
-                        vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE))
-                        binding.startEndSessionButton.text = "Start Session"
-                        startSession = false
-                        focusSessionModel.incrementViewCount(sessionId!!)
+
+                        if (startSession) {
+                            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                            val vibrator = vibratorManager.defaultVibrator
+                            vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE))
+                            binding.startEndSessionButton.text = "Start Session"
+                            startSession = false
+                            focusSessionModel.incrementViewCount(sessionId!!)
+                        }
                     }
                 }
                 if (!startSession) {
@@ -106,6 +109,7 @@ class StartSessionActivity: AppCompatActivity() {
                     timer.start()
                 } else {
                     val toast = Toast.makeText(applicationContext, "Uh-oh, you've ended the session before completing.", Toast.LENGTH_LONG)
+                    startSession = false
                     toast.show()
                     timer.cancel()
                     finish()

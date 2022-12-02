@@ -54,7 +54,7 @@ class LabSoundsFragment: Fragment() {
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            binding.createSession.text = "Log in first before creating a s session"
+            binding.createSession.text = "Log in first before creating a session"
         }
         viewModel.getTurnedOnAmbientItemList().observe(viewLifecycleOwner) {
             itemList ->
